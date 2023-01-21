@@ -1,10 +1,10 @@
 <template>
   <div class="tasks">
     <div class="tasks__wrapper">
-      <template v-if="areItemsLoaded && pendingItems.length > 0">
-        <TodoItem v-for="item in pendingItems" :key="item.id" :item="item" />
+      <template v-if="areItemsLoaded && filteredItems.length > 0">
+        <TodoItem v-for="item in filteredItems" :key="item.id" :item="item" />
       </template>
-      <template v-else-if="areItemsLoaded && pendingItems.length === 0">
+      <template v-else-if="areItemsLoaded && filteredItems.length === 0">
         <div class="tasks__placeholder">No items for display</div>
       </template>
       <template v-else>
@@ -24,7 +24,7 @@ export default {
     TodoItem,
   },
   computed: {
-    ...mapGetters(["pendingItems", "areItemsLoaded"]),
+    ...mapGetters(["filteredItems", "areItemsLoaded"]),
   },
 };
 </script>

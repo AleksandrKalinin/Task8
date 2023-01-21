@@ -6,6 +6,7 @@ export default createStore({
     areItemsLoaded: false,
     itemsLength: 10,
     onlyPendingItems: false,
+    selectedFilter: "All",
   },
   getters: {
     items: (state) => {
@@ -31,6 +32,18 @@ export default createStore({
         return getters.items;
       }
     },
+
+    filteredItems(state, getters) {
+      if (state.selectedFilter !== "All") {
+        return [
+          ...getters.pendingItems.filter(
+            (item) => item.category === state.selectedFilter
+          ),
+        ];
+      } else {
+        return getters.pendingItems;
+      }
+    },
   },
   mutations: {
     updateItems(state, items) {
@@ -48,6 +61,10 @@ export default createStore({
     selectPending(state) {
       state.onlyPendingItems = !state.onlyPendingItems;
     },
+
+    filterItems(state, value) {
+      state.selectedFilter = value;
+    },
   },
   actions: {
     async loadItems({ commit }) {
@@ -55,7 +72,6 @@ export default createStore({
         await fetch("./todos.json")
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             commit("updateItems", data);
           })
           .then(() => commit("itemsLoaded"));
