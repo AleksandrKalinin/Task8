@@ -5,6 +5,7 @@ export default createStore({
     items: [],
     areItemsLoaded: false,
     itemsLength: 10,
+    onlyPendingItems: false,
   },
   getters: {
     items: (state) => {
@@ -18,6 +19,18 @@ export default createStore({
     itemsLength: (state) => {
       return state.itemsLength;
     },
+
+    onlyPendingItems: (state) => {
+      return state.onlyPendingItems;
+    },
+
+    pendingItems(state, getters) {
+      if (state.onlyPendingItems) {
+        return [...getters.items.filter((item) => item.completed !== true)];
+      } else {
+        return getters.items;
+      }
+    },
   },
   mutations: {
     updateItems(state, items) {
@@ -30,6 +43,10 @@ export default createStore({
 
     updateItemsLength(state, value) {
       state.itemsLength = value;
+    },
+
+    selectPending(state) {
+      state.onlyPendingItems = !state.onlyPendingItems;
     },
   },
   actions: {

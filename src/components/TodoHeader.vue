@@ -10,7 +10,12 @@
       </nav>
       <div class="tasks-display__filter tasks-filter">
         Show only pending:
-        <input class="tasks-filter__checkbox" type="checkbox" name="" />
+        <input
+          class="tasks-filter__checkbox"
+          type="checkbox"
+          name=""
+          v-on:click="selectPending"
+        />
       </div>
     </div>
   </div>
@@ -19,6 +24,11 @@
 <script>
 export default {
   name: "TodoHeader",
+  methods: {
+    selectPending: function () {
+      this.$store.commit("selectPending");
+    },
+  },
 };
 </script>
 
@@ -32,7 +42,7 @@ export default {
     justify-content: space-between
 
     .tasks-options
-      font-size: 16px
+      font-size: 18px
       color: #222222
 
       .tasks-options__item
@@ -45,8 +55,10 @@ export default {
     .tasks-filter
       display: flex
       align-items: center
-      font-size: 16px
+      font-size: 18px
 
       .tasks-filter__checkbox
-        margin-left: 6px
+        margin-left: 10px
+        width: 25px
+        height: 25px
 </style>
