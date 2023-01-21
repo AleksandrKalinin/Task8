@@ -6,27 +6,10 @@
     <router-link to="/register">Register</router-link>
   </nav>
   <router-view /> -->
-  <header class="header">
-    <div class="header__logo header-logo"></div>
-    <div class="menu"></div>
-  </header>
+  <MainHeader />
   <main class="container">
     <CalendarCarousel />
-    <div class="tasks__header tasks-header">
-      <div class="tasks-header__display tasks-display">
-        <nav class="tasks-display__options tasks-options">
-          <span class="tasks-options__item task-option_selected">
-            by default
-          </span>
-          <span class="tasks-options__item">by name</span>
-          <span class="tasks-options__item">by category</span>
-        </nav>
-        <div class="tasks-display__filter tasks-filter">
-          Show only pending:
-          <input class="tasks-filter__checkbox" type="checkbox" name="" />
-        </div>
-      </div>
-    </div>
+    <TodoHeader />
     <div class="main-content">
       <SideBar />
       <TodoList />
@@ -38,24 +21,22 @@
 import TodoList from "@/components/TodoList.vue";
 import SideBar from "@/components/SideBar.vue";
 import CalendarCarousel from "@/components/CalendarCarousel.vue";
+import MainHeader from "@/components/MainHeader.vue";
+import TodoHeader from "@/components/TodoHeader.vue";
 
 export default {
+  name: "App",
   components: {
     TodoList,
     SideBar,
     CalendarCarousel,
+    MainHeader,
+    TodoHeader,
   },
 };
 </script>
 
 <style lang="sass">
-.icon
-  display: flex
-  width: 30px
-  height: 30px
-  color: tomato
-  cursor: pointer
-
 .regular-button
   display: flex
   justify-content: center
@@ -81,11 +62,6 @@ export default {
   margin: 0
   font-family: 'Open Sans', sans-serif
 
-header
-  width: 100%
-  height: 80px
-  background: tomato
-
 .container
   width: 100%
   padding: 30px
@@ -93,30 +69,4 @@ header
 .main-content
   display: flex
   width: 100%
-
-.tasks-header
-  padding: 30px 0
-
-.tasks-header__display
-  display: flex
-  justify-content: space-between
-
-.tasks-options
-  font-size: 16px
-  color: #222222
-
-.tasks-options__item
-  margin-right: 15px
-  cursor: pointer
-
-.task-option_selected
-  color: tomato
-
-.tasks-filter
-  display: flex
-  align-items: center
-  font-size: 16px
-
-.tasks-filter__checkbox
-  margin-left: 6px
 </style>

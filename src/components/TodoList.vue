@@ -69,6 +69,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+.icon
+  display: flex
+  width: 30px
+  height: 30px
+  color: tomato
+  cursor: pointer
+
 .tasks
   width: calc(100% - 300px - 30px)
   margin-bottom: -15px
