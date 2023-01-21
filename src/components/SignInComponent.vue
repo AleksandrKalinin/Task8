@@ -1,12 +1,15 @@
 <template>
-  <div class="signin">This is signin page</div>
+  <MainHeader />
+  <div class="register">This is signin page</div>
 </template>
 
 <script>
+import MainHeader from "@/components/MainHeader.vue";
+
 export default {
   name: "SignInComponent",
-  props: {
-    msg: String,
+  components: {
+    MainHeader,
   },
 };
 </script>

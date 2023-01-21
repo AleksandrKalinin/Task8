@@ -1,7 +1,10 @@
 <template>
   <header class="header">
-    <div class="header__logo header-logo"></div>
-    <div class="menu"></div>
+    <nav class="menu">
+      <router-link class="menu__link" to="/">Home</router-link>
+      <router-link class="menu__link" to="/signin">Sign in</router-link>
+      <router-link class="menu__link" to="/register">Register</router-link>
+    </nav>
   </header>
 </template>
 
@@ -17,4 +20,23 @@ header
   width: 100%
   height: 80px
   background: tomato
+  display: flex
+  justify-content: flex-end
+  align-items: center
+
+  .menu
+    height: 100%
+    display: flex
+
+    .menu__link
+      color: #ffffff
+      display: flex
+      height: 100%
+      padding: 0 20px
+      text-decoration: none
+      align-items: center
+      transition: .1s all
+
+    .menu__link:hover
+      background: #EF5C43
 </style>

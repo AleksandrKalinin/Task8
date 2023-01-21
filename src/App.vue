@@ -1,38 +1,10 @@
 <template>
-  <!--
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/signin">Sign in</router-link> |
-    <router-link to="/register">Register</router-link>
-  </nav>
-  <router-view /> -->
-  <MainHeader />
-  <main class="container">
-    <CalendarCarousel />
-    <TodoHeader />
-    <div class="main-content">
-      <SideBar />
-      <TodoList />
-    </div>
-  </main>
+  <router-view />
 </template>
 
 <script>
-import TodoList from "@/components/TodoList.vue";
-import SideBar from "@/components/SideBar.vue";
-import CalendarCarousel from "@/components/CalendarCarousel.vue";
-import MainHeader from "@/components/MainHeader.vue";
-import TodoHeader from "@/components/TodoHeader.vue";
-
 export default {
   name: "App",
-  components: {
-    TodoList,
-    SideBar,
-    CalendarCarousel,
-    MainHeader,
-    TodoHeader,
-  },
 };
 </script>
 
