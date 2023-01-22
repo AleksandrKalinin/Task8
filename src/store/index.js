@@ -11,6 +11,7 @@ export default createStore({
     sortOrder: false,
     isModalOpen: false,
     currentItem: null,
+    selectedDate: null,
   },
   getters: {
     isModalOpen: (state) => {
@@ -75,6 +76,27 @@ export default createStore({
         ];
       }
     },
+
+    filteredItemsByDate(state, getters) {
+      let date = state.selectedDate;
+      if (date === null) {
+        return [...getters.filteredAndSortedItems];
+      } else {
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        return [
+          ...getters.filteredAndSortedItems.filter((item) => {
+            let currentDate = new Date(item.date);
+            return (
+              currentDate.getDate() === day &&
+              currentDate.getMonth() === month &&
+              currentDate.getFullYear() === year
+            );
+          }),
+        ];
+      }
+    },
   },
   mutations: {
     updateItems(state, items) {
@@ -131,6 +153,10 @@ export default createStore({
     changeStatus(state, id) {
       let index = state.items.map((item) => item.id).indexOf(id);
       state.items[index].completed = !state.items[index].completed;
+    },
+
+    setSelectedDate(state, date) {
+      state.selectedDate = date;
     },
   },
   actions: {

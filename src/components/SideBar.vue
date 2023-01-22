@@ -23,7 +23,9 @@
         {{ category }}
       </div>
     </div>
-    <div class="current-tasks">Всего {{ filteredItems.length }} тасков</div>
+    <div class="current-tasks">
+      Всего {{ filteredItemsByDate.length }} тасков
+    </div>
     <button class="regular-button" v-on:click="toggleModal">Add item</button>
   </div>
 </template>
@@ -33,7 +35,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "SideBar",
   computed: {
-    ...mapGetters(["items", "filteredItems"]),
+    ...mapGetters(["items", "filteredItemsByDate"]),
     categories() {
       let unique = [];
       for (var i = 0; i < this.items.length; i++) {

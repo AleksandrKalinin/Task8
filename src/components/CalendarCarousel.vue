@@ -1,14 +1,16 @@
 <template>
   <div class="calendar">
-    <div class="calendar__wrapper">
+    <div class="calendar__wrapper" v-on:scroll="consoleOnScroll">
       <template v-if="days.length !== 0">
         <div
           class="calendar__item calendar-item"
           v-for="(item, index) in days"
-          v-bind:key="index"
-          v-bind:class="{
+          :key="index"
+          :class="{
             'calendar-item_selected': item.getDate() === currentDate.getDate(),
           }"
+          :ref="setItemRef"
+          v-on:click="selectItems(item)"
         >
           <span class="calendar-item__day">{{ names[item.getDay()] }}</span>
           <span class="calendar-item__date"
@@ -33,6 +35,7 @@ export default {
   name: "CalendarCarousel",
   data() {
     return {
+      itemRefs: [],
       currentDate: new Date(),
       days: [],
       names: [
@@ -61,6 +64,10 @@ export default {
     };
   },
   methods: {
+    consoleOnScroll: function () {
+      console.log("fafef");
+    },
+
     renderItems: function () {
       const year = this.currentDate.getFullYear();
       const month = this.currentDate.getMonth();
@@ -72,9 +79,34 @@ export default {
       }
       this.days = days;
     },
+
+    setItemRef: function (el) {
+      if (el) {
+        this.itemRefs.push(el);
+      }
+    },
+
+    scrollToElement: function () {
+      let index = this.currentDate.getDate();
+      this.itemRefs[index].scrollIntoView({
+        behavior: "auto",
+        inline: "center",
+      });
+    },
+
+    selectItems: function (date) {
+      this.$store.commit("setSelectedDate", date);
+    },
+  },
+  beforeUpdate() {
+    this.itemRefs = [];
   },
   mounted() {
     this.renderItems();
+  },
+  updated() {
+    this.scrollToElement();
+    this.$store.commit("setSelectedDate", this.currentDate);
   },
 };
 </script>
