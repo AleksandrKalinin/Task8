@@ -1,6 +1,12 @@
 <template>
   <div class="tasks__item tasks-item">
-    <input class="tasks-item__checkbox" type="checkbox" name="" />
+    <input
+      class="tasks-item__checkbox"
+      type="checkbox"
+      name=""
+      v-bind:checked="item.completed"
+      v-on:click="changeStatus(item.id)"
+    />
     <p class="tasks-item__text">
       {{ item.text }}
     </p>
@@ -38,6 +44,10 @@ export default {
     editItem: function (id) {
       this.$store.commit("setCurrentItem", id);
       this.$store.commit("toggleModal");
+    },
+
+    changeStatus: function (id) {
+      this.$store.commit("changeStatus", id);
     },
   },
 };

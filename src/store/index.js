@@ -120,14 +120,17 @@ export default createStore({
 
     editItem(state, value) {
       let index = state.items.map((item) => item.id).indexOf(value.id);
-      console.log(value.id);
-      console.log(index);
       state.items[index] = value;
     },
 
     setCurrentItem(state, id) {
       let index = state.items.map((item) => item.id).indexOf(id);
       state.currentItem = state.items[index];
+    },
+
+    changeStatus(state, id) {
+      let index = state.items.map((item) => item.id).indexOf(id);
+      state.items[index].completed = !state.items[index].completed;
     },
   },
   actions: {

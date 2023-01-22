@@ -65,8 +65,10 @@ export default {
         let item = {};
         if (this.currentItem === null) {
           item.id = uuidv4();
+          item.completed = false;
         } else {
           item.id = this.currentItem.id;
+          item.completed = this.currentItem.completed;
         }
         item.text = this.text;
         item.date = this.date;
