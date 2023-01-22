@@ -41,7 +41,7 @@ export default {
           unique.push(this.items[i].category);
         }
       }
-      return unique;
+      return unique.sort((a, b) => a.localeCompare(b));
     },
   },
   methods: {

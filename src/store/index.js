@@ -7,6 +7,8 @@ export default createStore({
     itemsLength: 10,
     onlyPendingItems: false,
     selectedFilter: "All",
+    itemsSortValue: "default",
+    sortOrder: false,
   },
   getters: {
     items: (state) => {
@@ -19,6 +21,10 @@ export default createStore({
 
     itemsLength: (state) => {
       return state.itemsLength;
+    },
+
+    itemsSortValue: (state) => {
+      return state.itemsSortValue;
     },
 
     onlyPendingItems: (state) => {
@@ -44,6 +50,21 @@ export default createStore({
         return getters.pendingItems;
       }
     },
+
+    filteredAndSortedItems(state, getters) {
+      let val = state.itemsSortValue;
+      if (val === "default") {
+        return [...getters.filteredItems];
+      } else if (state.sortOrder) {
+        return [
+          ...getters.filteredItems.sort((a, b) => a[val].localeCompare(b[val])),
+        ];
+      } else {
+        return [
+          ...getters.filteredItems.sort((a, b) => b[val].localeCompare(a[val])),
+        ];
+      }
+    },
   },
   mutations: {
     updateItems(state, items) {
@@ -58,12 +79,20 @@ export default createStore({
       state.itemsLength = value;
     },
 
+    updateSortOrder(state) {
+      state.sortOrder = !state.sortOrder;
+    },
+
     selectPending(state) {
       state.onlyPendingItems = !state.onlyPendingItems;
     },
 
     filterItems(state, value) {
       state.selectedFilter = value;
+    },
+
+    updateSortValue(state, value) {
+      state.itemsSortValue = value;
     },
   },
   actions: {
