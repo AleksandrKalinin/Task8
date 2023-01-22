@@ -40,13 +40,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
-.icon
-  display: flex
-  width: 30px
-  height: 30px
-  color: tomato
-  cursor: pointer
-
 .tasks-item
   display: flex
   align-items: flex-start

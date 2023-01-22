@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="current-tasks">Всего {{ filteredItems.length }} тасков</div>
-    <button class="regular-button">Add item</button>
+    <button class="regular-button" v-on:click="toggleModal">Add item</button>
   </div>
 </template>
 
@@ -47,6 +47,10 @@ export default {
   methods: {
     filterItems: function (val) {
       this.$store.commit("filterItems", val);
+    },
+
+    toggleModal: function () {
+      this.$store.commit("toggleModal");
     },
   },
 };

@@ -1,4 +1,7 @@
 <template>
+  <template v-if="isModalOpen">
+    <ModalComponent />
+  </template>
   <MainHeader />
   <main class="container">
     <CalendarCarousel />
@@ -11,12 +14,13 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import { mapGetters } from "vuex";
 import TodoList from "@/components/TodoList.vue";
 import SideBar from "@/components/SideBar.vue";
 import CalendarCarousel from "@/components/CalendarCarousel.vue";
 import MainHeader from "@/components/MainHeader.vue";
 import TodoHeader from "@/components/TodoHeader.vue";
+import ModalComponent from "@/components/ModalComponent.vue";
 
 export default {
   name: "HomeView",
@@ -26,6 +30,10 @@ export default {
     CalendarCarousel,
     MainHeader,
     TodoHeader,
+    ModalComponent,
+  },
+  computed: {
+    ...mapGetters(["isModalOpen"]),
   },
 };
 </script>

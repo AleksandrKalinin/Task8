@@ -16,6 +16,13 @@ export default {
 </script>
 
 <style lang="sass">
+.icon
+  display: flex
+  width: 30px
+  height: 30px
+  color: tomato
+  cursor: pointer
+
 .regular-button
   display: flex
   justify-content: center
@@ -40,6 +47,9 @@ export default {
   padding: 0
   margin: 0
   font-family: 'Open Sans', sans-serif
+
+body
+  position: relative
 
 .container
   width: 100%

@@ -9,8 +9,13 @@ export default createStore({
     selectedFilter: "All",
     itemsSortValue: "default",
     sortOrder: false,
+    isModalOpen: false,
   },
   getters: {
+    isModalOpen: (state) => {
+      return state.isModalOpen;
+    },
+
     items: (state) => {
       return state.items;
     },
@@ -98,6 +103,14 @@ export default createStore({
     deleteItem(state, id) {
       let index = state.items.map((item) => item.id).indexOf(id);
       state.items.splice(index, 1);
+    },
+
+    toggleModal(state) {
+      state.isModalOpen = !state.isModalOpen;
+    },
+
+    addItem(state, item) {
+      state.items.unshift(item);
     },
   },
   actions: {
