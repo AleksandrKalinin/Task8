@@ -94,6 +94,11 @@ export default createStore({
     updateSortValue(state, value) {
       state.itemsSortValue = value;
     },
+
+    deleteItem(state, id) {
+      let index = state.items.map((item) => item.id).indexOf(id);
+      state.items.splice(index, 1);
+    },
   },
   actions: {
     async loadItems({ commit }) {
