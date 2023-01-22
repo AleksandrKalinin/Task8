@@ -10,6 +10,7 @@ export default createStore({
     itemsSortValue: "default",
     sortOrder: false,
     isModalOpen: false,
+    currentItem: null,
   },
   getters: {
     isModalOpen: (state) => {
@@ -18,6 +19,10 @@ export default createStore({
 
     items: (state) => {
       return state.items;
+    },
+
+    currentItem: (state) => {
+      return state.currentItem;
     },
 
     areItemsLoaded: (state) => {
@@ -111,6 +116,18 @@ export default createStore({
 
     addItem(state, item) {
       state.items.unshift(item);
+    },
+
+    editItem(state, value) {
+      let index = state.items.map((item) => item.id).indexOf(value.id);
+      console.log(value.id);
+      console.log(index);
+      state.items[index] = value;
+    },
+
+    setCurrentItem(state, id) {
+      let index = state.items.map((item) => item.id).indexOf(id);
+      state.currentItem = state.items[index];
     },
   },
   actions: {

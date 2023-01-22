@@ -14,9 +14,10 @@
           Lorem ipsum dolor sit ament
         </textarea>
         <select class="modal-form__select modal-select" v-model="category">
-          <option class="modal-select__option">Work</option>
-          <option class="modal-select__option">Study</option>
+          <option class="modal-select__option">General</option>
           <option class="modal-select__option">Personal</option>
+          <option class="modal-select__option">Study</option>
+          <option class="modal-select__option">Work</option>
         </select>
         <input
           class="modal-form__input modal-input"
@@ -25,7 +26,9 @@
           placeholder="Select date"
           v-model="date"
         />
-        <button class="regular-button" v-on:click="addItem">Save</button>
+        <button class="regular-button" v-on:click="applyChanges">
+          {{ buttonText }}
+        </button>
       </form>
     </div>
   </div>
@@ -33,6 +36,7 @@
 
 <script>
 import { v4 as uuidv4 } from "uuid";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ModalComponent",
@@ -43,25 +47,46 @@ export default {
       category: "",
     };
   },
+  computed: {
+    ...mapGetters(["currentItem"]),
+    buttonText() {
+      return this.currentItem === null ? "Add item" : "Edit item";
+    },
+  },
   methods: {
     toggleModal: function () {
       this.$store.commit("toggleModal");
     },
 
-    addItem: function (e) {
+    applyChanges: function (e) {
       if (this.text === "" || this.date === "" || this.category === "") {
         alert("Fill all fields!");
       } else {
         let item = {};
-        item.id = uuidv4();
+        if (this.currentItem === null) {
+          item.id = uuidv4();
+        } else {
+          item.id = this.currentItem.id;
+        }
         item.text = this.text;
         item.date = this.date;
         item.category = this.category;
         e.preventDefault();
-        this.$store.commit("addItem", item);
+        if (this.currentItem === null) {
+          this.$store.commit("addItem", item);
+        } else {
+          this.$store.commit("editItem", item);
+        }
         this.$store.commit("toggleModal");
       }
     },
+  },
+  mounted() {
+    if (this.currentItem !== null) {
+      this.text = this.currentItem.text;
+      this.date = this.currentItem.date;
+      this.category = this.currentItem.category;
+    }
   },
 };
 </script>
@@ -78,6 +103,7 @@ export default {
   display: flex
   justify-content: center
   align-items: center
+  z-index: 999
 
 .modal
   width: 500px
