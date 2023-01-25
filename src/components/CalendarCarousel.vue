@@ -10,7 +10,7 @@
             'calendar-item_selected': item.getDate() === currentDate.getDate(),
           }"
           :ref="setItemRef"
-          v-on:click="selectItems(item)"
+          v-on:click="selectItem(item)"
         >
           <span class="calendar-item__day">{{ names[item.getDay()] }}</span>
           <span class="calendar-item__date"
@@ -65,7 +65,15 @@ export default {
   },
   methods: {
     consoleOnScroll: function () {
-      console.log("fafef");
+      let el = this.itemRefs[this.itemRefs.length - 2];
+      let rect = el.getBoundingClientRect();
+      if (
+        rect.left >= 0 &&
+        rect.right <=
+          (window.innerWidth || document.documentElement.clientWidth)
+      ) {
+        console.log("fafef");
+      }
     },
 
     renderItems: function () {
@@ -94,7 +102,8 @@ export default {
       });
     },
 
-    selectItems: function (date) {
+    selectItem: function (date) {
+      this.currentDate = date;
       this.$store.commit("setSelectedDate", date);
     },
   },
