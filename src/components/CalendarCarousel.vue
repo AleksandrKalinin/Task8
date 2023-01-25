@@ -1,15 +1,13 @@
 <template>
   <div class="calendar">
-    <div class="calendar__wrapper" v-on:scroll="consoleOnScroll">
+    <div class="calendar__wrapper" v-on:scroll="checkPosition">
       <template v-if="days.length !== 0">
         <div
           class="calendar__item calendar-item"
           v-for="(item, index) in days"
           :key="index"
           :class="{
-            'calendar-item_selected':
-              item.getDate() === selectedDate.getDate() &&
-              item.getMonth() === selectedDate.getMonth(),
+            'calendar-item_selected': this.checkIfEqual(item, selectedDate),
           }"
           :ref="setItemRef"
           v-on:click="selectItem(item)"
@@ -20,8 +18,14 @@
             {{ item.getFullYear() }}</span
           >
           <div class="calendar-item__tasks calendar-tasks">
-            <span class="calendar-tasks__item calendar-task_completed"></span>
-            <span class="calendar-tasks__item calendar-task_pending"></span>
+            <span
+              v-if="checkCompleted(item)"
+              class="calendar-tasks__item calendar-task_completed"
+            ></span>
+            <span
+              v-if="checkPending(item)"
+              class="calendar-tasks__item calendar-task_pending"
+            ></span>
           </div>
         </div>
       </template>
@@ -67,10 +71,30 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["selectedDate"]),
+    ...mapGetters(["selectedDate", "filteredItemsByDate", "items"]),
   },
   methods: {
-    consoleOnScroll: function () {
+    checkCompleted: function (item) {
+      for (let i = 0; i < this.items.length; i++) {
+        if (
+          this.checkIfEqual(item, new Date(this.items[i].date)) &&
+          this.items[i].completed === true
+        ) {
+          return true;
+        }
+      }
+    },
+    checkPending: function (item) {
+      for (let i = 0; i < this.items.length; i++) {
+        if (
+          this.checkIfEqual(item, new Date(this.items[i].date)) &&
+          this.items[i].completed === false
+        ) {
+          return true;
+        }
+      }
+    },
+    checkPosition: function () {
       let el = this.itemRefs[this.itemRefs.length - 2];
       let rect = el.getBoundingClientRect();
       if (
@@ -119,11 +143,8 @@ export default {
     },
 
     scrollToElement: function () {
-      let index = this.days.findIndex(
-        (item) =>
-          item.getDate() === this.selectedDate.getDate() &&
-          item.getMonth() === this.selectedDate.getMonth() &&
-          item.getFullYear() === this.selectedDate.getFullYear()
+      let index = this.days.findIndex((item) =>
+        this.checkIfEqual(item, this.selectedDate)
       );
       this.itemRefs[index].scrollIntoView({
         behavior: "auto",
@@ -132,8 +153,15 @@ export default {
     },
 
     selectItem: function (date) {
-      //console.log(date);
       this.$store.commit("setSelectedDate", date);
+    },
+
+    checkIfEqual: function (first, second) {
+      return (
+        first.getDate() === second.getDate() &&
+        first.getMonth() === second.getMonth() &&
+        first.getFullYear() === second.getFullYear()
+      );
     },
   },
   beforeUpdate() {
@@ -143,8 +171,6 @@ export default {
     this.renderItems();
   },
   updated() {
-    //console.log("refs after update", this.itemRefs);
-    //this.$store.commit("setSelectedDate", this.selectedDate);
     this.scrollToElement();
   },
 };
