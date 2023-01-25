@@ -7,7 +7,9 @@
           v-for="(item, index) in days"
           :key="index"
           :class="{
-            'calendar-item_selected': item.getDate() === currentDate.getDate(),
+            'calendar-item_selected':
+              item.getDate() === selectedDate.getDate() &&
+              item.getMonth() === selectedDate.getMonth(),
           }"
           :ref="setItemRef"
           v-on:click="selectItem(item)"
@@ -31,12 +33,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "CalendarCarousel",
   data() {
     return {
       itemRefs: [],
-      currentDate: new Date(),
       days: [],
       names: [
         "Sunday",
@@ -63,6 +66,9 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters(["selectedDate"]),
+  },
   methods: {
     consoleOnScroll: function () {
       let el = this.itemRefs[this.itemRefs.length - 2];
@@ -72,14 +78,32 @@ export default {
         rect.right <=
           (window.innerWidth || document.documentElement.clientWidth)
       ) {
-        console.log("fafef");
+        this.appendItems();
       }
     },
 
     renderItems: function () {
-      const year = this.currentDate.getFullYear();
-      const month = this.currentDate.getMonth();
+      const year = this.selectedDate.getFullYear();
+      const month = this.selectedDate.getMonth();
       const days = [];
+      const startDate = new Date(year, month, 1);
+      while (startDate.getMonth() === month) {
+        days.push(new Date(startDate));
+        startDate.setDate(startDate.getDate() + 1);
+      }
+      this.days = days;
+    },
+
+    appendItems: function () {
+      const days = this.days;
+      let year = days[days.length - 1].getFullYear();
+      let month = days[days.length - 1].getMonth();
+      if (month < 11) {
+        month++;
+      } else {
+        month = 1;
+        year++;
+      }
       const startDate = new Date(year, month, 1);
       while (startDate.getMonth() === month) {
         days.push(new Date(startDate));
@@ -95,7 +119,12 @@ export default {
     },
 
     scrollToElement: function () {
-      let index = this.currentDate.getDate();
+      let index = this.days.findIndex(
+        (item) =>
+          item.getDate() === this.selectedDate.getDate() &&
+          item.getMonth() === this.selectedDate.getMonth() &&
+          item.getFullYear() === this.selectedDate.getFullYear()
+      );
       this.itemRefs[index].scrollIntoView({
         behavior: "auto",
         inline: "center",
@@ -103,7 +132,7 @@ export default {
     },
 
     selectItem: function (date) {
-      this.currentDate = date;
+      //console.log(date);
       this.$store.commit("setSelectedDate", date);
     },
   },
@@ -114,8 +143,9 @@ export default {
     this.renderItems();
   },
   updated() {
+    //console.log("refs after update", this.itemRefs);
+    //this.$store.commit("setSelectedDate", this.selectedDate);
     this.scrollToElement();
-    this.$store.commit("setSelectedDate", this.currentDate);
   },
 };
 </script>

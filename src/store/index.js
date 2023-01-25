@@ -11,9 +11,13 @@ export default createStore({
     sortOrder: false,
     isModalOpen: false,
     currentItem: null,
-    selectedDate: null,
+    selectedDate: new Date(),
   },
   getters: {
+    selectedDate: (state) => {
+      return state.selectedDate;
+    },
+
     isModalOpen: (state) => {
       return state.isModalOpen;
     },

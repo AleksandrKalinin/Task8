@@ -1,5 +1,10 @@
 <template>
-  <div class="tasks__item tasks-item">
+  <div
+    class="tasks__item tasks-item"
+    v-bind:class="{
+      'tasks-item_completed': item.completed === true,
+    }"
+  >
     <input
       class="tasks-item__checkbox"
       type="checkbox"
@@ -62,11 +67,11 @@ export default {
   padding: 30px
   margin-bottom: 20px
   cursor: pointer
-  transition: .1s all
+  transition: .2s all
   border: 1px solid tomato
 
   .tasks-item__icons
-    width: 90px
+    width: 70px
     display: flex
     justify-content: space-between
 
@@ -87,11 +92,14 @@ export default {
     text-align: center
 
 .tasks-item:hover
-  transform: translateX(10px)
+  transform: translateX(5px)
 
   .tasks-item__text
     color: tomato
 
   .tasks-item__category
     color: tomato
+
+.tasks-item_completed
+  opacity: .4
 </style>

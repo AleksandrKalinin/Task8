@@ -18,8 +18,8 @@ export default {
 <style lang="sass">
 .icon
   display: flex
-  width: 30px
-  height: 30px
+  width: 20px
+  height: 20px
   color: tomato
   cursor: pointer
 
