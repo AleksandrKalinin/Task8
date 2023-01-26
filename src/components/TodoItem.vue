@@ -43,7 +43,7 @@ export default {
 
     editItem: function (id) {
       this.$store.commit("setCurrentItem", id);
-      this.$store.commit("toggleModal");
+      this.$store.commit("modal/toggleModal");
     },
 
     changeStatus: function (id) {
@@ -66,7 +66,7 @@ export default {
   border: 1px solid tomato
 
   .tasks-item__icons
-    width: 90px
+    width: 70px
     display: flex
     justify-content: space-between
 

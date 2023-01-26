@@ -1,5 +1,6 @@
 <template>
   <div class="calendar">
+    <!--
     <div class="calendar__wrapper">
       <div class="calendar__item calendar-item">
         <span class="calendar-item__day">Monday</span>
@@ -86,6 +87,7 @@
         <span class="calendar-item__date">8</span>
       </div>
     </div>
+    -->
   </div>
 </template>
 

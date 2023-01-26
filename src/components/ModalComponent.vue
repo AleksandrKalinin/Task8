@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     toggleModal: function () {
-      this.$store.commit("toggleModal");
+      this.$store.commit("modal/toggleModal");
     },
 
     applyChanges: function (e) {
@@ -79,7 +79,7 @@ export default {
         } else {
           this.$store.commit("editItem", item);
         }
-        this.$store.commit("toggleModal");
+        this.$store.commit("modal/toggleModal");
       }
     },
   },

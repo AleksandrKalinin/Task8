@@ -33,7 +33,7 @@ export default {
     ModalComponent,
   },
   computed: {
-    ...mapGetters(["isModalOpen"]),
+    ...mapGetters("modal", ["isModalOpen"]),
   },
 };
 </script>

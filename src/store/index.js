@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import { modalModule } from "@/store/modalModule";
 
 export default createStore({
   state: {
@@ -9,14 +10,9 @@ export default createStore({
     selectedFilter: "All",
     itemsSortValue: "default",
     sortOrder: false,
-    isModalOpen: false,
     currentItem: null,
   },
   getters: {
-    isModalOpen: (state) => {
-      return state.isModalOpen;
-    },
-
     items: (state) => {
       return state.items;
     },
@@ -110,10 +106,6 @@ export default createStore({
       state.items.splice(index, 1);
     },
 
-    toggleModal(state) {
-      state.isModalOpen = !state.isModalOpen;
-    },
-
     addItem(state, item) {
       state.items.unshift(item);
     },
@@ -147,5 +139,7 @@ export default createStore({
       }
     },
   },
-  modules: {},
+  modules: {
+    modal: modalModule,
+  },
 });
