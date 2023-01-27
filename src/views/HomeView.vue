@@ -2,6 +2,8 @@
   <template v-if="isModalOpen">
     <ModalComponent />
   </template>
+  <button v-on:click="loopOverDatabase">Add data</button>
+  <button v-on:click="getFromDatabase">Get data</button>
   <MainHeader :username="username" />
   <main class="container">
     <CalendarCarousel />
@@ -14,15 +16,16 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import TodoList from "@/components/TodoList.vue";
 import SideBar from "@/components/SideBar.vue";
 import CalendarCarousel from "@/components/CalendarCarousel.vue";
 import MainHeader from "@/components/MainHeader.vue";
 import TodoHeader from "@/components/TodoHeader.vue";
 import ModalComponent from "@/components/ModalComponent.vue";
-import { auth } from "@/database/index";
+import { db, auth } from "@/database/index";
 import { onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import router from "@/router";
 
 export default {
@@ -42,6 +45,24 @@ export default {
   },
   computed: {
     ...mapGetters("modal", ["isModalOpen"]),
+  },
+  methods: {
+    ...mapActions("database", ["getFromDatabase", "loopOverDatabase"]),
+    getDatabase: async function () {
+      const querySnapshot = await getDocs(collection(db, "users"));
+      querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data()}`);
+      });
+    },
+    getAnother: async function () {
+      const docRef = doc(db, "todos", "M6YobLBRZMYj1jOGFhBv");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+      } else {
+        console.log("No such document!");
+      }
+    },
   },
   mounted() {
     onAuthStateChanged(auth, (user) => {

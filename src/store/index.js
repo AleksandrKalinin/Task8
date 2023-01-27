@@ -1,11 +1,10 @@
 import { createStore } from "vuex";
 import { modalModule } from "@/store/modalModule";
 import { calendarModule } from "@/store/calendarModule";
+import { databaseModule } from "@/store/databaseModule";
 
 export default createStore({
   state: {
-    items: [],
-    areItemsLoaded: false,
     itemsLength: 10,
     onlyPendingItems: false,
     selectedFilter: "All",
@@ -14,16 +13,8 @@ export default createStore({
     currentItem: null,
   },
   getters: {
-    items: (state) => {
-      return state.items;
-    },
-
     currentItem: (state) => {
       return state.currentItem;
-    },
-
-    areItemsLoaded: (state) => {
-      return state.areItemsLoaded;
     },
 
     itemsLength: (state) => {
@@ -38,22 +29,27 @@ export default createStore({
       return state.onlyPendingItems;
     },
 
-    pendingItems(state, getters) {
+    pendingItems(state, getters, rootGetters) {
+      let items = JSON.parse(JSON.stringify(rootGetters.database.items));
+      //console.log("todos", todos);
+      //console.log("spreaded", [...items]);
       if (state.onlyPendingItems) {
-        return [...getters.items.filter((item) => item.completed !== true)];
+        return items.filter((item) => item.completed !== true);
       } else {
-        return getters.items;
+        return items;
       }
     },
 
     filteredItems(state, getters) {
+      //console.log("getters", getters.pendingItems);
       if (state.selectedFilter !== "All") {
         return [
-          ...getters.pendingItems.filter(
+          getters.pendingItems.filter(
             (item) => item.category === state.selectedFilter
           ),
         ];
       } else {
+        //console.log([...getters.pendingItems]);
         return getters.pendingItems;
       }
     },
@@ -64,19 +60,20 @@ export default createStore({
         return [...getters.filteredItems];
       } else if (state.sortOrder) {
         return [
-          ...getters.filteredItems.sort((a, b) => a[val].localeCompare(b[val])),
+          getters.filteredItems.sort((a, b) => a[val].localeCompare(b[val])),
         ];
       } else {
         return [
-          ...getters.filteredItems.sort((a, b) => b[val].localeCompare(a[val])),
+          getters.filteredItems.sort((a, b) => b[val].localeCompare(a[val])),
         ];
       }
     },
 
     filteredItemsByDate(state, getters, rootGetters) {
+      //console.log("filt", getters.filteredAndSortedItems);
       let date = rootGetters.calendar.selectedDate;
       if (date === null) {
-        return [...getters.filteredAndSortedItems];
+        return getters.filteredAndSortedItems;
       } else {
         let year = date.getFullYear();
         let month = date.getMonth();
@@ -95,14 +92,6 @@ export default createStore({
     },
   },
   mutations: {
-    updateItems(state, items) {
-      state.items = items;
-    },
-
-    itemsLoaded(state) {
-      state.areItemsLoaded = true;
-    },
-
     updateItemsLength(state, value) {
       state.itemsLength = value;
     },
@@ -153,9 +142,9 @@ export default createStore({
         await fetch("./todos.json")
           .then((response) => response.json())
           .then((data) => {
-            commit("updateItems", data);
-          })
-          .then(() => commit("itemsLoaded"));
+            commit("updateOriginalItems", data);
+          });
+        //.then(() => commit("itemsLoaded"));
       } catch (e) {
         console.log(e);
       }
@@ -165,5 +154,6 @@ export default createStore({
   modules: {
     modal: modalModule,
     calendar: calendarModule,
+    database: databaseModule,
   },
 });

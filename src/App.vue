@@ -8,9 +8,10 @@ export default {
   name: "App",
   methods: {
     ...mapActions(["loadItems"]),
+    ...mapActions("database", ["getFromDatabase"]),
   },
   mounted() {
-    this.loadItems();
+    this.getFromDatabase();
   },
 };
 </script>

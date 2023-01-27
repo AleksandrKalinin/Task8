@@ -24,9 +24,10 @@ export default {
     TodoItem,
   },
   computed: {
-    ...mapGetters(["filteredItemsByDate", "areItemsLoaded"]),
+    ...mapGetters(["filteredItemsByDate"]),
+    ...mapGetters("database", ["areItemsLoaded"]),
     finalItems() {
-      return this.filteredItemsByDate;
+      return [...this.filteredItemsByDate];
     },
   },
 };

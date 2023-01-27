@@ -25,7 +25,7 @@
   },
   {
     "id": 4,
-    "date": "2023-01-24",
+    "date": "2023-02-04",
     "category": "General",
     "completed": false,
     "title": "Title 4",
@@ -41,7 +41,7 @@
   },
   {
     "id": 6,
-    "date": "2023-01-25",
+    "date": "2023-02-04",
     "category": "Personal",
     "completed": true,
     "title": "Lorem ipsum 6",
@@ -57,7 +57,7 @@
   },
   {
     "id": 8,
-    "date": "2023-01-23",
+    "date": "2023-02-03",
     "category": "Work",
     "completed": true,
     "title": "Lorem ipsum 8",
@@ -129,7 +129,7 @@
   },
   {
     "id": 17,
-    "date": "2023-01-26",
+    "date": "2023-02-02",
     "category": "General",
     "completed": true,
     "title": "Lorem ipsum 6",
@@ -161,7 +161,7 @@
   },
   {
     "id": 21,
-    "date": "2023-01-24",
+    "date": "2023-02-04",
     "category": "Study",
     "completed": false,
     "title": "Title 5",
@@ -177,7 +177,7 @@
   },
   {
     "id": 23,
-    "date": "2023-01-23",
+    "date": "2023-02-09",
     "category": "Study",
     "completed": false,
     "title": "Title 5",

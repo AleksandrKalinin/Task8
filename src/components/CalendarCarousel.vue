@@ -72,7 +72,8 @@ export default {
   },
   computed: {
     ...mapGetters("calendar", ["selectedDate"]),
-    ...mapGetters(["filteredItemsByDate", "items"]),
+    ...mapGetters(["filteredItemsByDate"]),
+    ...mapGetters("database", ["items"]),
   },
   methods: {
     checkCompleted: function (item) {

@@ -40,7 +40,8 @@ import { mapGetters } from "vuex";
 export default {
   name: "SideBar",
   computed: {
-    ...mapGetters(["items", "filteredItemsByDate"]),
+    ...mapGetters(["filteredItemsByDate"]),
+    ...mapGetters("database", ["items"]),
     categories() {
       let unique = [];
       for (var i = 0; i < this.items.length; i++) {
