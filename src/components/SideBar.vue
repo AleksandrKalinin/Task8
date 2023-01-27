@@ -26,7 +26,12 @@
     <div class="current-tasks">
       Всего {{ filteredItemsByDate.length }} тасков
     </div>
-    <button class="regular-button" v-on:click="toggleModal">Add item</button>
+    <button
+      class="button button_regular button_normal button_centered"
+      v-on:click="toggleModal"
+    >
+      Add item
+    </button>
   </div>
 </template>
 
@@ -52,7 +57,7 @@ export default {
     },
 
     toggleModal: function () {
-      this.$store.commit("toggleModal");
+      this.$store.commit("modal/toggleModal");
     },
   },
 };

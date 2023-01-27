@@ -1,4 +1,6 @@
 import { createStore } from "vuex";
+import { modalModule } from "@/store/modalModule";
+import { calendarModule } from "@/store/calendarModule";
 
 export default createStore({
   state: {
@@ -9,19 +11,9 @@ export default createStore({
     selectedFilter: "All",
     itemsSortValue: "default",
     sortOrder: false,
-    isModalOpen: false,
     currentItem: null,
-    selectedDate: new Date(),
   },
   getters: {
-    selectedDate: (state) => {
-      return state.selectedDate;
-    },
-
-    isModalOpen: (state) => {
-      return state.isModalOpen;
-    },
-
     items: (state) => {
       return state.items;
     },
@@ -81,8 +73,8 @@ export default createStore({
       }
     },
 
-    filteredItemsByDate(state, getters) {
-      let date = state.selectedDate;
+    filteredItemsByDate(state, getters, rootGetters) {
+      let date = rootGetters.calendar.selectedDate;
       if (date === null) {
         return [...getters.filteredAndSortedItems];
       } else {
@@ -136,10 +128,6 @@ export default createStore({
       state.items.splice(index, 1);
     },
 
-    toggleModal(state) {
-      state.isModalOpen = !state.isModalOpen;
-    },
-
     addItem(state, item) {
       state.items.unshift(item);
     },
@@ -158,10 +146,6 @@ export default createStore({
       let index = state.items.map((item) => item.id).indexOf(id);
       state.items[index].completed = !state.items[index].completed;
     },
-
-    setSelectedDate(state, date) {
-      state.selectedDate = date;
-    },
   },
   actions: {
     async loadItems({ commit }) {
@@ -177,5 +161,9 @@ export default createStore({
       }
     },
   },
-  modules: {},
+
+  modules: {
+    modal: modalModule,
+    calendar: calendarModule,
+  },
 });

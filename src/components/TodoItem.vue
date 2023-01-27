@@ -48,7 +48,7 @@ export default {
 
     editItem: function (id) {
       this.$store.commit("setCurrentItem", id);
-      this.$store.commit("toggleModal");
+      this.$store.commit("modal/toggleModal");
     },
 
     changeStatus: function (id) {

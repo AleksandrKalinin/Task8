@@ -42,8 +42,8 @@
   {
     "id": 6,
     "date": "2023-01-25",
-    "completed": true,
     "category": "Personal",
+    "completed": true,
     "title": "Lorem ipsum 6",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
@@ -90,8 +90,8 @@
   {
     "id": 12,
     "date": "2023-02-02",
-    "completed": true,
     "category": "Personal",
+    "completed": true,
     "title": "Lorem ipsum 12",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
@@ -130,8 +130,8 @@
   {
     "id": 17,
     "date": "2023-01-26",
-    "completed": true,
     "category": "General",
+    "completed": true,
     "title": "Lorem ipsum 6",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
@@ -154,8 +154,8 @@
   {
     "id": 20,
     "date": "2023-01-22",
-    "completed": true,
     "category": "General",
+    "completed": true,
     "title": "Lorem ipsum 6",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
@@ -170,8 +170,8 @@
   {
     "id": 22,
     "date": "2023-01-22",
-    "completed": true,
     "category": "General",
+    "completed": true,
     "title": "Lorem ipsum 6",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
@@ -186,8 +186,8 @@
   {
     "id": 24,
     "date": "2023-01-23",
-    "completed": true,
     "category": "General",
+    "completed": true,
     "title": "Lorem ipsum 6",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   }                

@@ -23,24 +23,47 @@ export default {
   color: tomato
   cursor: pointer
 
-.regular-button
+.button
   display: flex
   justify-content: center
   align-items: center
-  width: 130px
   height: 50px
-  font-size: 18px
   text-transform: uppercase
   letter-spacing: 1px
-  color: #ffffff
-  background: tomato
-  border: none
   cursor: pointer
-  margin: 0 auto
   transition: .1s all
 
-.regular-button:hover
+.button_regular
+  background: tomato
+  color: #ffffff
+  border: none
+
+.button_regular:hover
   background: #EF5C43
+
+.button_outline
+  background: tomato
+  color: #ffffff
+  border: 1px solid #ffffff
+
+.button_outline:hover
+  background: #ffffff
+  color: tomato
+
+.button_large
+  width: 100%
+  font-size: 18px
+
+.button_normal
+  width: 130px
+  font-size: 18px
+
+.button_small
+  font-size: 14px
+  width: 100px
+
+.button_centered
+  margin: 0 auto
 
 *
   box-sizing: border-box

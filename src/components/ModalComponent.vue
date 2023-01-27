@@ -26,7 +26,10 @@
           placeholder="Select date"
           v-model="date"
         />
-        <button class="regular-button" v-on:click="applyChanges">
+        <button
+          class="button button_regular button_normal"
+          v-on:click="applyChanges"
+        >
           {{ buttonText }}
         </button>
       </form>
@@ -55,7 +58,7 @@ export default {
   },
   methods: {
     toggleModal: function () {
-      this.$store.commit("toggleModal");
+      this.$store.commit("modal/toggleModal");
     },
 
     applyChanges: function (e) {
@@ -79,7 +82,7 @@ export default {
         } else {
           this.$store.commit("editItem", item);
         }
-        this.$store.commit("toggleModal");
+        this.$store.commit("modal/toggleModal");
       }
     },
   },

@@ -71,7 +71,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["selectedDate", "filteredItemsByDate", "items"]),
+    ...mapGetters("calendar", ["selectedDate"]),
+    ...mapGetters(["filteredItemsByDate", "items"]),
   },
   methods: {
     checkCompleted: function (item) {
@@ -153,7 +154,7 @@ export default {
     },
 
     selectItem: function (date) {
-      this.$store.commit("setSelectedDate", date);
+      this.$store.commit("calendar/setSelectedDate", date);
     },
 
     checkIfEqual: function (first, second) {
