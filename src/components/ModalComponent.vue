@@ -1,7 +1,7 @@
 <template>
   <div class="overlay">
     <div class="modal">
-      <span class="icon" v-on:click="toggleModal">
+      <span class="icon" v-on:click="this.toggleModal()">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
           <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
           <path
@@ -39,7 +39,7 @@
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "ModalComponent",
@@ -57,9 +57,8 @@ export default {
     },
   },
   methods: {
-    toggleModal: function () {
-      this.$store.commit("modal/toggleModal");
-    },
+    ...mapActions("database", ["addToDatabase", "editFromDatabase"]),
+    ...mapActions("modal", ["toggleModal"]),
 
     applyChanges: function (e) {
       if (this.text === "" || this.date === "" || this.category === "") {
@@ -78,11 +77,11 @@ export default {
         item.category = this.category;
         e.preventDefault();
         if (this.currentItem === null) {
-          this.$store.commit("addItem", item);
+          this.addToDatabase(item);
         } else {
-          this.$store.commit("editItem", item);
+          this.editFromDatabase(item);
         }
-        this.$store.commit("modal/toggleModal");
+        this.toggleModal();
       }
     },
   },

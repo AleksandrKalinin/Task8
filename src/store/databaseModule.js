@@ -1,5 +1,12 @@
 import { db } from "@/database/index";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  getDocs,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 export const databaseModule = {
   state: () => ({
@@ -25,32 +32,46 @@ export const databaseModule = {
     itemsLoaded(state) {
       state.areItemsLoaded = true;
     },
+
+    addToDatabase(state, value) {
+      console.log(value);
+    },
   },
 
   actions: {
-    async addToDatabase() {
+    async addToDatabase({ commit }, item) {
       try {
-        console.log("ffff");
+        await setDoc(doc(db, "todos", item.id), item);
+        commit("addToDatabase");
       } catch (e) {
         console.log(e);
       }
     },
-    async deleteFromDatabase() {
+    async deleteFromDatabase({ commit }, id) {
       try {
-        console.log("ffff");
+        await deleteDoc(doc(db, "todos", id.toString()));
+        console.log(commit);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async editFromDatabase({ commit }, item) {
+      try {
+        const docRef = doc(db, "todos", item.id.toString());
+        await updateDoc(docRef, item);
+        console.log(commit);
       } catch (e) {
         console.log(e);
       }
     },
     async getFromDatabase({ commit }) {
       try {
-        const docRef = doc(db, "vue-todolist", "todos");
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          let data = docSnap.data();
-          let array = [];
-          Object.keys(data).forEach((key) => {
-            array.push(data[key]);
+        const todosRef = collection(db, "todos");
+        const docSnap = await getDocs(todosRef);
+        const array = [];
+        if (docSnap) {
+          docSnap.forEach((doc) => {
+            array.push(doc.data());
           });
           commit("updateItems", array);
         } else {
@@ -62,16 +83,13 @@ export const databaseModule = {
       }
     },
     async loopOverDatabase() {
-      const arrayToObject = (array) =>
-        array.reduce((obj, item) => {
-          obj[item.id] = item;
-          return obj;
-        }, {});
-      const todosObject = arrayToObject([]);
-      try {
-        await setDoc(doc(db, "vue-todolist", "todos"), todosObject);
-      } catch (e) {
-        console.log(e);
+      let todos = [];
+      for (var i = 0; i < todos.length; i++) {
+        try {
+          await setDoc(doc(db, "todos", todos[i].id.toString()), todos[i]);
+        } catch (e) {
+          console.log(e);
+        }
       }
     },
   },

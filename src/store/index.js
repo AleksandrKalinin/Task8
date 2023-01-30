@@ -31,8 +31,6 @@ export default createStore({
 
     pendingItems(state, getters, rootGetters) {
       let items = JSON.parse(JSON.stringify(rootGetters.database.items));
-      //console.log("todos", todos);
-      //console.log("spreaded", [...items]);
       if (state.onlyPendingItems) {
         return items.filter((item) => item.completed !== true);
       } else {
@@ -41,7 +39,6 @@ export default createStore({
     },
 
     filteredItems(state, getters) {
-      //console.log("getters", getters.pendingItems);
       if (state.selectedFilter !== "All") {
         return [
           getters.pendingItems.filter(
@@ -49,7 +46,6 @@ export default createStore({
           ),
         ];
       } else {
-        //console.log([...getters.pendingItems]);
         return getters.pendingItems;
       }
     },
@@ -70,7 +66,6 @@ export default createStore({
     },
 
     filteredItemsByDate(state, getters, rootGetters) {
-      //console.log("filt", getters.filteredAndSortedItems);
       let date = rootGetters.calendar.selectedDate;
       if (date === null) {
         return getters.filteredAndSortedItems;
@@ -126,9 +121,8 @@ export default createStore({
       state.items[index] = value;
     },
 
-    setCurrentItem(state, id) {
-      let index = state.items.map((item) => item.id).indexOf(id);
-      state.currentItem = state.items[index];
+    setCurrentItem(state, item) {
+      state.currentItem = item;
     },
 
     changeStatus(state, id) {
@@ -144,10 +138,17 @@ export default createStore({
           .then((data) => {
             commit("updateOriginalItems", data);
           });
-        //.then(() => commit("itemsLoaded"));
       } catch (e) {
         console.log(e);
       }
+    },
+
+    startEditing({ commit, rootState }, id) {
+      let items = rootState.database.items;
+      let index = items.map((item) => item.id).indexOf(id);
+      let item = items[index];
+      commit("setCurrentItem", item);
+      commit("modal/toggleModal");
     },
   },
 

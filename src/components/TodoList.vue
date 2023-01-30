@@ -1,10 +1,10 @@
 <template>
   <div class="tasks">
     <div class="tasks__wrapper">
-      <template v-if="areItemsLoaded && finalItems.length > 0">
-        <TodoItem v-for="item in finalItems" :key="item.id" :item="item" />
+      <template v-if="areItemsLoaded && items.length > 0">
+        <TodoItem v-for="item in items" :key="item.id" :item="item" />
       </template>
-      <template v-else-if="areItemsLoaded && finalItems.length === 0">
+      <template v-else-if="areItemsLoaded && items.length === 0">
         <div class="tasks__placeholder">No items for display</div>
       </template>
       <template v-else>
@@ -24,11 +24,10 @@ export default {
     TodoItem,
   },
   computed: {
-    ...mapGetters(["filteredItemsByDate"]),
+    ...mapGetters({
+      items: "filteredItemsByDate",
+    }),
     ...mapGetters("database", ["areItemsLoaded"]),
-    finalItems() {
-      return [...this.filteredItemsByDate];
-    },
   },
 };
 </script>
