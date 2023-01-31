@@ -15,5 +15,11 @@ export const calendarModule = {
     },
   },
 
+  actions: {
+    setSelectedDate({ commit }, date) {
+      commit("setSelectedDate", date);
+    },
+  },
+
   namespaced: true,
 };

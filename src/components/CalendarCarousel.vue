@@ -77,6 +77,8 @@ export default {
   },
   methods: {
     ...mapActions("database", ["getFromDatabase"]),
+    ...mapActions("calendar", ["setSelectedDate"]),
+
     checkCompleted: function (item) {
       for (let i = 0; i < this.items.length; i++) {
         if (
@@ -90,6 +92,7 @@ export default {
         }
       }
     },
+
     checkPending: function (item) {
       for (let i = 0; i < this.items.length; i++) {
         if (
@@ -103,6 +106,7 @@ export default {
         }
       }
     },
+
     checkPosition: function () {
       let el = this.itemRefs[this.itemRefs.length - 2];
       let rect = el.getBoundingClientRect();
@@ -168,7 +172,7 @@ export default {
     },
 
     selectItem: function (date) {
-      this.$store.commit("calendar/setSelectedDate", date);
+      this.setSelectedDate(date);
     },
 
     checkIfEqual: function (first, second) {

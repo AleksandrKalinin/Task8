@@ -155,6 +155,22 @@ export default createStore({
       commit("setCurrentItem", item);
       commit("modal/toggleModal");
     },
+
+    filterItems({ commit }, value) {
+      commit("filterItems", value);
+    },
+
+    selectPending({ commit }) {
+      commit("selectPending");
+    },
+
+    updateSortOrder({ commit }) {
+      commit("updateSortOrder");
+    },
+
+    updateSortValue({ commit }, value) {
+      commit("updateSortValue", value);
+    },
   },
 
   modules: {

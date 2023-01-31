@@ -51,7 +51,6 @@ export default {
     ]),
     ...mapActions(["startEditing"]),
     deleteItem: function (id) {
-      //console.log(id);
       this.deleteFromDatabase(id);
     },
 
@@ -61,7 +60,6 @@ export default {
 
     changeStatus: function (item) {
       this.changeStatusInDatabase(item);
-      //this.$store.commit("changeStatus", id);
     },
   },
 };

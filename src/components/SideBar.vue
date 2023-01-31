@@ -36,12 +36,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "SideBar",
   computed: {
     ...mapGetters(["filteredItemsByDate"]),
     ...mapGetters("database", ["items"]),
+
     categories() {
       let unique = [];
       for (var i = 0; i < this.items.length; i++) {
@@ -53,13 +55,8 @@ export default {
     },
   },
   methods: {
-    filterItems: function (val) {
-      this.$store.commit("filterItems", val);
-    },
-
-    toggleModal: function () {
-      this.$store.commit("modal/toggleModal");
-    },
+    ...mapActions("modal", ["toggleModal"]),
+    ...mapActions(["filterItems"]),
   },
 };
 </script>
