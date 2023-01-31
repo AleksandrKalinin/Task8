@@ -68,14 +68,14 @@ export default createStore({
     filteredItemsByDate(state, getters, rootGetters) {
       let date = rootGetters.calendar.selectedDate;
       if (date === null) {
-        return getters.filteredAndSortedItems;
+        return [...getters.filteredAndSortedItems];
       } else {
         let year = date.getFullYear();
         let month = date.getMonth();
         let day = date.getDate();
         return [
           ...getters.filteredAndSortedItems.filter((item) => {
-            let currentDate = new Date(item.date);
+            let currentDate = new Date(item.date.seconds * 1000);
             return (
               currentDate.getDate() === day &&
               currentDate.getMonth() === month &&

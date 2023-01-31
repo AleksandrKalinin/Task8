@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "CalendarCarousel",
@@ -76,10 +76,14 @@ export default {
     ...mapGetters("database", ["items"]),
   },
   methods: {
+    ...mapActions("database", ["getFromDatabase"]),
     checkCompleted: function (item) {
       for (let i = 0; i < this.items.length; i++) {
         if (
-          this.checkIfEqual(item, new Date(this.items[i].date)) &&
+          this.checkIfEqual(
+            item,
+            new Date(this.items[i].date.seconds * 1000)
+          ) &&
           this.items[i].completed === true
         ) {
           return true;
@@ -89,7 +93,10 @@ export default {
     checkPending: function (item) {
       for (let i = 0; i < this.items.length; i++) {
         if (
-          this.checkIfEqual(item, new Date(this.items[i].date)) &&
+          this.checkIfEqual(
+            item,
+            new Date(this.items[i].date.seconds * 1000)
+          ) &&
           this.items[i].completed === false
         ) {
           return true;
@@ -124,18 +131,24 @@ export default {
       const days = this.days;
       let year = days[days.length - 1].getFullYear();
       let month = days[days.length - 1].getMonth();
+      const startDate = new Date(year, month, 1);
       if (month < 11) {
         month++;
       } else {
         month = 1;
         year++;
       }
-      const startDate = new Date(year, month, 1);
-      while (startDate.getMonth() === month) {
-        days.push(new Date(startDate));
-        startDate.setDate(startDate.getDate() + 1);
+      const endDate = new Date(year, month, 1);
+      while (endDate.getMonth() === month) {
+        days.push(new Date(endDate));
+        endDate.setDate(endDate.getDate() + 1);
       }
       this.days = days;
+      const payload = {
+        startDate,
+        endDate,
+      };
+      this.getFromDatabase(payload);
     },
 
     setItemRef: function (el) {
@@ -159,19 +172,22 @@ export default {
     },
 
     checkIfEqual: function (first, second) {
-      return (
+      const ifEqual =
         first.getDate() === second.getDate() &&
         first.getMonth() === second.getMonth() &&
-        first.getFullYear() === second.getFullYear()
-      );
+        first.getFullYear() === second.getFullYear();
+      return ifEqual;
     },
   },
+
   beforeUpdate() {
     this.itemRefs = [];
   },
+
   mounted() {
     this.renderItems();
   },
+
   updated() {
     this.scrollToElement();
   },

@@ -10,7 +10,7 @@
       type="checkbox"
       name=""
       v-bind:checked="item.completed"
-      v-on:click="changeStatus(item.id)"
+      v-on:click="changeStatus(item)"
     />
     <p class="tasks-item__text">
       {{ item.text }}
@@ -44,9 +44,14 @@ export default {
   name: "TodoItem",
   props: ["item"],
   methods: {
-    ...mapActions("database", ["deleteFromDatabase", "editFromDatabase"]),
+    ...mapActions("database", [
+      "deleteFromDatabase",
+      "editFromDatabase",
+      "changeStatusInDatabase",
+    ]),
     ...mapActions(["startEditing"]),
     deleteItem: function (id) {
+      //console.log(id);
       this.deleteFromDatabase(id);
     },
 
@@ -54,8 +59,9 @@ export default {
       this.startEditing(id);
     },
 
-    changeStatus: function (id) {
-      this.$store.commit("changeStatus", id);
+    changeStatus: function (item) {
+      this.changeStatusInDatabase(item);
+      //this.$store.commit("changeStatus", id);
     },
   },
 };

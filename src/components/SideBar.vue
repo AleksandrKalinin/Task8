@@ -70,6 +70,7 @@ export default {
   width: 300px
   margin-right: 30px
   border: 1px solid tomato
+  padding-bottom: 20px
 
 .categories-item
   padding: 15px

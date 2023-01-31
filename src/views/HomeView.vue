@@ -4,6 +4,7 @@
   </template>
   <button v-on:click="loopOverDatabase">Add data</button>
   <button v-on:click="getFromDatabase">Get data</button>
+  <button v-on:click="consoleItems">Console Items</button>
   <MainHeader :username="username" />
   <main class="container">
     <CalendarCarousel />
@@ -45,6 +46,12 @@ export default {
   },
   computed: {
     ...mapGetters("modal", ["isModalOpen"]),
+    ...mapGetters([
+      "filteredItems",
+      "filteredAndSortedItems",
+      "filteredItemsByDate",
+    ]),
+    ...mapGetters("database", ["items"]),
   },
   methods: {
     ...mapActions("database", ["getFromDatabase", "loopOverDatabase"]),
@@ -62,6 +69,12 @@ export default {
       } else {
         console.log("No such document!");
       }
+    },
+    consoleItems: function () {
+      //console.log("items", this.items);
+      //console.log("filteredItems", this.filteredItems);
+      //console.log("filteredAndSortedItems", this.filteredAndSortedItems);
+      //console.log("filteredItemsByDate", this.filteredItemsByDate);
     },
   },
   mounted() {

@@ -40,6 +40,7 @@
 <script>
 import { v4 as uuidv4 } from "uuid";
 import { mapGetters, mapActions } from "vuex";
+import { Timestamp } from "firebase/firestore";
 
 export default {
   name: "ModalComponent",
@@ -73,7 +74,7 @@ export default {
           item.completed = this.currentItem.completed;
         }
         item.text = this.text;
-        item.date = this.date;
+        item.date = Timestamp.fromDate(new Date(this.date));
         item.category = this.category;
         e.preventDefault();
         if (this.currentItem === null) {
@@ -88,7 +89,11 @@ export default {
   mounted() {
     if (this.currentItem !== null) {
       this.text = this.currentItem.text;
-      this.date = this.currentItem.date;
+      const date = new Date(this.currentItem.date.seconds * 1000);
+      const year = date.getFullYear();
+      const month = `${date.getMonth() + 1}`.padStart(2, "0");
+      const day = `${date.getDate()}`.padStart(2, "0");
+      this.date = `${year}-${month}-${day}`;
       this.category = this.currentItem.category;
     }
   },
