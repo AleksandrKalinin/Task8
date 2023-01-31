@@ -41,12 +41,12 @@ export default createStore({
     filteredItems(state, getters) {
       if (state.selectedFilter !== "All") {
         return [
-          getters.pendingItems.filter(
+          ...getters.pendingItems.filter(
             (item) => item.category === state.selectedFilter
           ),
         ];
       } else {
-        return getters.pendingItems;
+        return [...getters.pendingItems];
       }
     },
 
@@ -56,11 +56,11 @@ export default createStore({
         return [...getters.filteredItems];
       } else if (state.sortOrder) {
         return [
-          getters.filteredItems.sort((a, b) => a[val].localeCompare(b[val])),
+          ...getters.filteredItems.sort((a, b) => a[val].localeCompare(b[val])),
         ];
       } else {
         return [
-          getters.filteredItems.sort((a, b) => b[val].localeCompare(a[val])),
+          ...getters.filteredItems.sort((a, b) => b[val].localeCompare(a[val])),
         ];
       }
     },
@@ -75,7 +75,12 @@ export default createStore({
         let day = date.getDate();
         return [
           ...getters.filteredAndSortedItems.filter((item) => {
-            let currentDate = new Date(item.date.seconds * 1000);
+            let currentDate;
+            if (Object.prototype.hasOwnProperty.call(item?.date, "seconds")) {
+              currentDate = new Date(item.date.seconds * 1000);
+            } else {
+              currentDate = item.date;
+            }
             return (
               currentDate.getDate() === day &&
               currentDate.getMonth() === month &&
