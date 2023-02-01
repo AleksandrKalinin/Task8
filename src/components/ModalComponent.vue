@@ -1,13 +1,8 @@
 <template>
   <div class="overlay">
-    <div class="modal">
-      <span class="icon" v-on:click="this.toggleModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-          <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-          <path
-            d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"
-          />
-        </svg>
+    <div class="modal" v-if="currentItem">
+      <span class="icon" v-on:click="this.closeModal()">
+        <img v-bind:src="require('@/assets/close.svg')" />
       </span>
       <form class="modal__form modal-form">
         <textarea class="modal-form__text" v-model="text">
@@ -44,6 +39,7 @@ import { Timestamp } from "firebase/firestore";
 
 export default {
   name: "ModalComponent",
+  props: ["currentId"],
   data() {
     return {
       text: "",
@@ -51,15 +47,29 @@ export default {
       category: "",
     };
   },
+
   computed: {
     ...mapGetters(["currentItem"]),
+
+    selectedItem() {
+      return this.currentItem;
+    },
+
     buttonText() {
       return this.currentItem === null ? "Add item" : "Edit item";
     },
   },
+
+  watch: {
+    selectedItem() {
+      //console.log(cur);
+      //console.log(prev);
+    },
+  },
+
   methods: {
     ...mapActions("database", ["addToDatabase", "editFromDatabase"]),
-    ...mapActions("modal", ["toggleModal"]),
+    ...mapActions("modal", ["toggleModal", "closeModal"]),
 
     applyChanges: function (e) {
       if (this.text === "" || this.date === "" || this.category === "") {
@@ -82,12 +92,14 @@ export default {
         } else {
           this.editFromDatabase(item);
         }
-        this.toggleModal();
+        this.closeModal();
       }
     },
   },
+
   mounted() {
     if (this.currentItem !== null) {
+      console.log(this.currentItem);
       this.text = this.currentItem.text;
       const date = new Date(this.currentItem.date.seconds * 1000);
       const year = date.getFullYear();

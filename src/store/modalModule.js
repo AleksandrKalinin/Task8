@@ -1,3 +1,5 @@
+import router from "@/router";
+
 export const modalModule = {
   state: () => ({
     isModalOpen: false,
@@ -18,6 +20,10 @@ export const modalModule = {
   actions: {
     toggleModal({ commit }) {
       commit("toggleModal");
+    },
+
+    closeModal() {
+      router.push("/");
     },
   },
 

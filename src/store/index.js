@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import { modalModule } from "@/store/modalModule";
 import { calendarModule } from "@/store/calendarModule";
 import { databaseModule } from "@/store/databaseModule";
+//import router from "@/router";
 
 export default createStore({
   state: {
@@ -148,12 +149,17 @@ export default createStore({
       }
     },
 
-    startEditing({ commit, rootState }, id) {
-      let items = rootState.database.items;
-      let index = items.map((item) => item.id).indexOf(id);
-      let item = items[index];
-      commit("setCurrentItem", item);
-      commit("modal/toggleModal");
+    startEditing({ commit, rootGetters }, id) {
+      let items;
+      if (rootGetters["database/areItemsLoaded"]) {
+        items = JSON.parse(JSON.stringify(rootGetters["database/items"]));
+        console.log(items);
+        let index = items.map((item) => Number(item.id)).indexOf(Number(id));
+        let item = items[index];
+        console.log("item", item);
+        commit("setCurrentItem", item);
+      }
+      //router.push(`/edit/${item.id}`);
     },
 
     filterItems({ commit }, value) {

@@ -17,10 +17,10 @@
     </p>
     <span class="tasks-item__category">{{ item.category }}</span>
     <div class="tasks-item__icons">
-      <span class="icon" v-on:click="editItem(item.id, item)">
+      <span class="icon" v-on:click="editItem(item.id)">
         <img v-bind:src="require('@/assets/edit.svg')" />
       </span>
-      <span class="icon" v-on:click="deleteItem(item.id)">
+      <span class="icon" v-on:click="deleteFromDatabase(item.id)">
         <img v-bind:src="require('@/assets/delete.svg')" />
       </span>
     </div>
@@ -29,6 +29,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import router from "@/router";
 
 export default {
   name: "TodoItem",
@@ -40,12 +41,9 @@ export default {
       "changeStatusInDatabase",
     ]),
     ...mapActions(["startEditing"]),
-    deleteItem: function (id) {
-      this.deleteFromDatabase(id);
-    },
 
     editItem: function (id) {
-      this.startEditing(id);
+      router.push(`/edit/${id}`);
     },
 
     changeStatus: function (item) {
