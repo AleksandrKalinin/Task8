@@ -12,7 +12,7 @@ export default createStore({
     sortOrder: false,
     currentItem: null,
   },
-  
+
   getters: {
     items: (state) => {
       return state.items;

@@ -22,16 +22,24 @@
 
 <script>
 import TodoItem from "@/components/TodoItem.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TodoList",
   components: {
     TodoItem,
   },
-  
+
   computed: {
     ...mapGetters(["filteredAndSortedItems", "areItemsLoaded"]),
+  },
+
+  methods: {
+    ...mapActions(["loadItems"]),
+  },
+
+  mounted() {
+    this.loadItems();
   },
 };
 </script>

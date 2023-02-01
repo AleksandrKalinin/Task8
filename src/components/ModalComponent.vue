@@ -79,7 +79,7 @@ export default {
       }
     },
   },
-  
+
   mounted() {
     if (this.currentItem !== null) {
       this.text = this.currentItem.text;
