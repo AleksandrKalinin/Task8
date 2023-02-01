@@ -36,7 +36,7 @@
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "ModalComponent",
@@ -54,9 +54,8 @@ export default {
     },
   },
   methods: {
-    toggleModal: function () {
-      this.$store.commit("modal/toggleModal");
-    },
+    ...mapActions(["addItem", "editItem"]),
+    ...mapActions("modal", ["toggleModal"]),
 
     applyChanges: function (e) {
       if (this.text === "" || this.date === "" || this.category === "") {
@@ -75,11 +74,11 @@ export default {
         item.category = this.category;
         e.preventDefault();
         if (this.currentItem === null) {
-          this.$store.commit("addItem", item);
+          this.addItem(item);
         } else {
-          this.$store.commit("editItem", item);
+          this.editItem(item);
         }
-        this.$store.commit("modal/toggleModal");
+        this.toggleModal();
       }
     },
   },

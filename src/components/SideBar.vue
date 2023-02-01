@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "SideBar",
   computed: {
@@ -45,13 +45,8 @@ export default {
     },
   },
   methods: {
-    filterItems: function (val) {
-      this.$store.commit("filterItems", val);
-    },
-
-    toggleModal: function () {
-      this.$store.commit("toggleModal");
-    },
+    ...mapActions(["filterItems"]),
+    ...mapActions("modal", ["toggleModal"]),
   },
 };
 </script>

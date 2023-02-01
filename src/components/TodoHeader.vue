@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "TodoHeader",
@@ -53,22 +53,21 @@ export default {
     ...mapGetters(["itemsSortValue"]),
   },
   methods: {
-    selectPending: function () {
-      this.$store.commit("selectPending");
-    },
+    ...mapActions(["updateSortValue", "updateSortOrder", "selectPending"]),
+
     sortItems: function (e) {
-      this.$store.commit("updateSortOrder");
+      this.updateSortOrder();
       switch (e.target.id) {
         case "default": {
-          this.$store.commit("updateSortValue", "default");
+          this.updateSortValue("default");
           break;
         }
         case "text": {
-          this.$store.commit("updateSortValue", "text");
+          this.updateSortValue("text");
           break;
         }
         case "category": {
-          this.$store.commit("updateSortValue", "category");
+          this.updateSortValue("category");
           break;
         }
       }

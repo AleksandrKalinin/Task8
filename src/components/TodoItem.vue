@@ -12,7 +12,7 @@
     </p>
     <span class="tasks-item__category">{{ item.category }}</span>
     <div class="tasks-item__icons">
-      <span class="icon" v-on:click="editItem(item.id)">
+      <span class="icon" v-on:click="setCurrentItem(item.id)">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
           <path
@@ -33,22 +33,13 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "TodoItem",
   props: ["item"],
   methods: {
-    deleteItem: function (id) {
-      this.$store.commit("deleteItem", id);
-    },
-
-    editItem: function (id) {
-      this.$store.commit("setCurrentItem", id);
-      this.$store.commit("modal/toggleModal");
-    },
-
-    changeStatus: function (id) {
-      this.$store.commit("changeStatus", id);
-    },
+    ...mapActions(["deleteItem", "setCurrentItem", "changeStatus"]),
   },
 };
 </script>

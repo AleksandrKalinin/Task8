@@ -138,7 +138,45 @@ export default createStore({
         console.log(e);
       }
     },
+
+    filterItems({ commit }, value) {
+      commit("filterItems", value);
+    },
+
+    changeStatus({ commit }, id) {
+      commit("changeStatus", id);
+    },
+
+    deleteItem({ commit }, id) {
+      commit("deleteItem", id);
+    },
+
+    setCurrentItem({ commit }, id) {
+      commit("setCurrentItem", id);
+      commit("modal/toggleModal");
+    },
+
+    updateSortValue({ commit }, value) {
+      commit("updateSortValue", value);
+    },
+
+    updateSortOrder({ commit }) {
+      commit("updateSortOrder");
+    },
+
+    selectPending({ commit }) {
+      commit("selectPending");
+    },
+
+    editItem({ commit }, item) {
+      commit("editItem", item);
+    },
+
+    addItem({ commit }, item) {
+      commit("addItem", item);
+    },
   },
+
   modules: {
     modal: modalModule,
   },

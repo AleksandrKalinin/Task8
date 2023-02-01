@@ -15,5 +15,11 @@ export const modalModule = {
     },
   },
 
+  actions: {
+    toggleModal({ commit }) {
+      commit("toggleModal");
+    },
+  },
+
   namespaced: true,
 };
