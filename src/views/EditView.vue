@@ -28,7 +28,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["startEditing"]),
+    ...mapActions(["startEditing", "stopEditing"]),
   },
 
   beforeMount() {
@@ -39,6 +39,12 @@ export default {
         this.startEditing(current.id);
       }
     );
+  },
+
+  beforeRouteLeave(to, from, next) {
+    console.log(`Redirecting from ${from.fullPath} to ${to.fullPath}`);
+    this.stopEditing();
+    next();
   },
 };
 </script>
