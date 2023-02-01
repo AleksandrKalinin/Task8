@@ -28,7 +28,7 @@
     </div>
     <button
       class="button button_regular button_normal button_centered"
-      v-on:click="toggleModal"
+      v-on:click="addItem"
     >
       Add item
     </button>
@@ -37,6 +37,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import router from "@/router";
 
 export default {
   name: "SideBar",
@@ -57,8 +58,11 @@ export default {
   },
 
   methods: {
-    ...mapActions("modal", ["toggleModal"]),
     ...mapActions(["filterItems"]),
+
+    addItem: function () {
+      router.push("/add");
+    },
   },
 };
 </script>

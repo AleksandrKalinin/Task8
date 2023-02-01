@@ -38,8 +38,9 @@ export const databaseModule = {
       state.areItemsLoaded = true;
     },
 
-    addToDatabase(state, value) {
-      console.log(value);
+    addToDatabase() {
+      //console.log("state");
+      //state.items.unshift(value);
     },
 
     updateItem(state, value) {
@@ -48,14 +49,12 @@ export const databaseModule = {
     },
 
     deleteItem(state, id) {
-      let index = state.items.map((item) => Number(item.id)).indexOf(id);
+      let index = state.items.map((item) => item.id).indexOf(id);
       state.items.splice(index, 1);
     },
 
     changeStatus(state, value) {
-      let index = state.items
-        .map((item) => Number(item.id))
-        .indexOf(Number(value.id));
+      let index = state.items.map((item) => item.id).indexOf(value.id);
       state.items[index].completed = !state.items[index].completed;
     },
   },
@@ -64,7 +63,7 @@ export const databaseModule = {
     async addToDatabase({ commit }, item) {
       try {
         await setDoc(doc(db, "todos", item.id), item);
-        commit("addToDatabase");
+        commit("addToDatabase", item);
       } catch (e) {
         console.log(e);
       }

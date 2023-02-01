@@ -1,5 +1,5 @@
 <template>
-  <ModalComponent v-bind:currentId="$route.params.id" />
+  <ModalComponent v-if="currentItem" v-bind:currentId="$route.params.id" />
 </template>
 
 <script>
@@ -14,6 +14,7 @@ export default {
 
   computed: {
     ...mapGetters("database", ["items"]),
+    ...mapGetters(["currentItem"]),
 
     itemsDB() {
       return this.items;
@@ -34,9 +35,8 @@ export default {
     this.startEditing(this.$route.params.id);
     this.$watch(
       () => this.$route.params,
-      (current, previous) => {
+      (current) => {
         this.startEditing(current.id);
-        console.log(previous, current);
       }
     );
   },

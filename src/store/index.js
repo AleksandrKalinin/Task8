@@ -13,6 +13,7 @@ export default createStore({
     sortOrder: false,
     currentItem: null,
   },
+
   getters: {
     currentItem: (state) => {
       return state.currentItem;
@@ -92,6 +93,7 @@ export default createStore({
       }
     },
   },
+
   mutations: {
     updateItemsLength(state, value) {
       state.itemsLength = value;
@@ -132,10 +134,12 @@ export default createStore({
     },
 
     changeStatus(state, id) {
+      console.log(id);
       let index = state.items.map((item) => item.id).indexOf(id);
       state.items[index].completed = !state.items[index].completed;
     },
   },
+
   actions: {
     async loadItems({ commit }) {
       try {
@@ -153,13 +157,10 @@ export default createStore({
       let items;
       if (rootGetters["database/areItemsLoaded"]) {
         items = JSON.parse(JSON.stringify(rootGetters["database/items"]));
-        console.log(items);
-        let index = items.map((item) => Number(item.id)).indexOf(Number(id));
+        let index = items.map((item) => item.id.toString()).indexOf(id);
         let item = items[index];
-        console.log("item", item);
         commit("setCurrentItem", item);
       }
-      //router.push(`/edit/${item.id}`);
     },
 
     filterItems({ commit }, value) {
@@ -176,6 +177,10 @@ export default createStore({
 
     updateSortValue({ commit }, value) {
       commit("updateSortValue", value);
+    },
+
+    stopEditing({ commit }) {
+      commit("setCurrentItem", null);
     },
   },
 

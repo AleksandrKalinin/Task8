@@ -1,7 +1,7 @@
 <template>
   <div class="overlay">
-    <div class="modal" v-if="currentItem">
-      <span class="icon" v-on:click="this.closeModal()">
+    <div class="modal">
+      <span class="icon" v-on:click="stopEditingAndClose">
         <img v-bind:src="require('@/assets/close.svg')" />
       </span>
       <form class="modal__form modal-form">
@@ -62,16 +62,10 @@ export default {
     },
   },
 
-  watch: {
-    selectedItem() {
-      //console.log(cur);
-      //console.log(prev);
-    },
-  },
-
   methods: {
     ...mapActions("database", ["addToDatabase", "editFromDatabase"]),
     ...mapActions("modal", ["toggleModal", "closeModal"]),
+    ...mapActions(["stopEditing"]),
 
     applyChanges: function (e) {
       if (this.text === "" || this.date === "" || this.category === "") {
@@ -95,13 +89,18 @@ export default {
           this.editFromDatabase(item);
         }
         this.closeModal();
+        this.stopEditing();
       }
+    },
+
+    stopEditingAndClose: function () {
+      this.stopEditing();
+      this.closeModal();
     },
   },
 
   mounted() {
     if (this.currentItem !== null) {
-      console.log(this.currentItem);
       this.text = this.currentItem.text;
       const date = new Date(this.currentItem.date.seconds * 1000);
       const year = date.getFullYear();
