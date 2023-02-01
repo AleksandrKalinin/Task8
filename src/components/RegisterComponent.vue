@@ -32,9 +32,11 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
   name: "RegisterComponent",
+
   components: {
     MainHeader,
   },
+
   data() {
     return {
       password: "",
@@ -42,6 +44,7 @@ export default {
       errorMessage: null,
     };
   },
+
   methods: {
     consoleDB: function () {
       console.log(db);

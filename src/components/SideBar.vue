@@ -40,6 +40,7 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "SideBar",
+
   computed: {
     ...mapGetters(["filteredItemsByDate"]),
     ...mapGetters("database", ["items"]),
@@ -54,6 +55,7 @@ export default {
       return unique.sort((a, b) => a.localeCompare(b));
     },
   },
+
   methods: {
     ...mapActions("modal", ["toggleModal"]),
     ...mapActions(["filterItems"]),

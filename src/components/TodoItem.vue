@@ -33,7 +33,9 @@ import router from "@/router";
 
 export default {
   name: "TodoItem",
+
   props: ["item"],
+
   methods: {
     ...mapActions("database", [
       "deleteFromDatabase",

@@ -37,9 +37,11 @@ import router from "@/router";
 
 export default {
   name: "SignInComponent",
+
   components: {
     MainHeader,
   },
+
   data() {
     return {
       password: "",
@@ -47,6 +49,7 @@ export default {
       errorMessage: null,
     };
   },
+
   methods: {
     signInUser: function () {
       signInWithEmailAndPassword(auth, this.email, this.password)

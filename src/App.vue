@@ -3,78 +3,14 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 export default {
   name: "App",
-  methods: {
-    ...mapActions(["loadItems"]),
-    ...mapActions("database", ["getFromDatabase"]),
-  },
-  mounted() {
-    let date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const startDate = new Date(year, month, 1);
-    const endDate =
-      month === 11 ? new Date(year + 1, 0, 1) : new Date(year, month + 1, 1);
-    const payload = {
-      startDate,
-      endDate,
-    };
-    this.getFromDatabase(payload);
-  },
 };
 </script>
 
 <style lang="sass">
-.icon
-  display: flex
-  width: 20px
-  height: 20px
-  color: tomato
-  cursor: pointer
-
-.button
-  display: flex
-  justify-content: center
-  align-items: center
-  height: 50px
-  text-transform: uppercase
-  letter-spacing: 1px
-  cursor: pointer
-  transition: .1s all
-
-.button_regular
-  background: tomato
-  color: #ffffff
-  border: none
-
-.button_regular:hover
-  background: #EF5C43
-
-.button_outline
-  background: tomato
-  color: #ffffff
-  border: 1px solid #ffffff
-
-.button_outline:hover
-  background: #ffffff
-  color: tomato
-
-.button_large
-  width: 100%
-  font-size: 18px
-
-.button_normal
-  width: 130px
-  font-size: 18px
-
-.button_small
-  font-size: 14px
-  width: 100px
-
-.button_centered
-  margin: 0 auto
+@import "./assets/styles/icon.sass"
+@import "./assets/styles/button.sass"
 
 *
   box-sizing: border-box

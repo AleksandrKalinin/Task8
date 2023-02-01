@@ -41,6 +41,7 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "CalendarCarousel",
+
   data() {
     return {
       itemRefs: [],
@@ -70,11 +71,13 @@ export default {
       ],
     };
   },
+
   computed: {
     ...mapGetters("calendar", ["selectedDate"]),
     ...mapGetters(["filteredItemsByDate"]),
     ...mapGetters("database", ["items"]),
   },
+
   methods: {
     ...mapActions("database", ["getFromDatabase"]),
     ...mapActions("calendar", ["setSelectedDate"]),

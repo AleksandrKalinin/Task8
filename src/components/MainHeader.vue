@@ -26,7 +26,9 @@ import { signOut } from "firebase/auth";
 
 export default {
   name: "MainHeader",
+
   props: ["username"],
+
   methods: {
     logOut: function () {
       signOut(auth)

@@ -39,7 +39,9 @@ import { Timestamp } from "firebase/firestore";
 
 export default {
   name: "ModalComponent",
+
   props: ["currentId"],
+
   data() {
     return {
       text: "",
