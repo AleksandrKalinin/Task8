@@ -30,6 +30,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "SideBar",
   computed: {

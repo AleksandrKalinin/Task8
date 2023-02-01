@@ -29,6 +29,7 @@ export default {
   components: {
     TodoItem,
   },
+  
   computed: {
     ...mapGetters(["filteredAndSortedItems", "areItemsLoaded"]),
   },

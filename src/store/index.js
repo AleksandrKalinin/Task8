@@ -12,6 +12,7 @@ export default createStore({
     sortOrder: false,
     currentItem: null,
   },
+  
   getters: {
     items: (state) => {
       return state.items;
@@ -72,6 +73,7 @@ export default createStore({
       }
     },
   },
+
   mutations: {
     updateItems(state, items) {
       state.items = items;
@@ -125,6 +127,7 @@ export default createStore({
       state.items[index].completed = !state.items[index].completed;
     },
   },
+
   actions: {
     async loadItems({ commit }) {
       try {

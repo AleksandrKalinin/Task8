@@ -42,12 +42,14 @@ export default {
       category: "",
     };
   },
+
   computed: {
     ...mapGetters(["currentItem"]),
     buttonText() {
       return this.currentItem === null ? "Add item" : "Edit item";
     },
   },
+
   methods: {
     ...mapActions(["addItem", "editItem"]),
     ...mapActions("modal", ["toggleModal"]),
@@ -77,6 +79,7 @@ export default {
       }
     },
   },
+  
   mounted() {
     if (this.currentItem !== null) {
       this.text = this.currentItem.text;
