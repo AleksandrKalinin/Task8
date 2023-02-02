@@ -5,7 +5,7 @@
     "category": "General",
     "completed": false,
     "title": "Lorem ipsum 1",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "New task sit amet, consectetur adipiscing elit."
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "category": "Work",
     "completed": true,
     "title": "Lorem ipsum 2",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit." 
+    "text": "Another task" 
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "category": "Study",
     "completed": true,
     "title": "Blabla",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 4,
@@ -29,7 +29,7 @@
     "category": "General",
     "completed": false,
     "title": "Title 4",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 5,
@@ -37,13 +37,13 @@
     "category": "Study",
     "completed": false,
     "title": "Title 5",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 6,
     "date": "2018-01-23",
     "completed": true,
-    "category": "General",
+    "category": "Personal",
     "title": "Lorem ipsum 6",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
@@ -53,7 +53,7 @@
     "category": "General",
     "completed": false,
     "title": "Lorem ipsum 7",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 8,
@@ -69,7 +69,7 @@
     "category": "Study",
     "completed": true,
     "title": "Blabla",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 10,
@@ -77,7 +77,7 @@
     "category": "General",
     "completed": false,
     "title": "Title 4",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 11,
@@ -85,13 +85,13 @@
     "category": "Study",
     "completed": false,
     "title": "Title 5",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 12,
     "date": "2019-04-23",
     "completed": true,
-    "category": "General",
+    "category": "Personal",
     "title": "Lorem ipsum 12",
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
@@ -109,7 +109,7 @@
     "category": "Study",
     "completed": true,
     "title": "Blabla",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 15,
@@ -117,7 +117,7 @@
     "category": "General",
     "completed": false,
     "title": "Title 4",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 16,
@@ -125,7 +125,7 @@
     "category": "Study",
     "completed": false,
     "title": "Title 5",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 17,
@@ -138,10 +138,10 @@
   {
     "id": 18,
     "date": "2019-04-23",
-    "category": "General",
+    "category": "Personal",
     "completed": false,
     "title": "Title 4",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 19,
@@ -149,7 +149,7 @@
     "category": "Study",
     "completed": false,
     "title": "Title 5",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 20,
@@ -165,7 +165,7 @@
     "category": "Study",
     "completed": false,
     "title": "Title 5",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 22,
@@ -181,7 +181,7 @@
     "category": "Study",
     "completed": false,
     "title": "Title 5",
-    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porta nulla felis, sit amet ullamcorper mi hendrerit vitae."
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   },
   {
     "id": 24,

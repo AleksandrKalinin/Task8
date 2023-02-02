@@ -1,19 +1,54 @@
 <template>
   <div class="sidebar">
     <div class="categories">
-      <div class="categories-item">All</div>
-      <div class="categories-item">General</div>
-      <div class="categories-item">Work</div>
-      <div class="categories-item">Personal</div>
+      <div
+        class="categories-item"
+        v-on:click="filterItems('All')"
+        v-bind:class="{
+          'categories-item_active': this.$store.state.selectedFilter === 'All',
+        }"
+      >
+        All
+      </div>
+      <div
+        v-for="(category, index) in categories"
+        class="categories-item"
+        v-bind:class="{
+          'categories-item_active':
+            this.$store.state.selectedFilter === category,
+        }"
+        v-bind:key="index"
+        v-on:click="filterItems(category)"
+      >
+        {{ category }}
+      </div>
     </div>
-    <div class="current-tasks">Всего 5 тасков</div>
-    <button class="regular-button">Add item</button>
+    <div class="current-tasks">Всего {{ filteredItems.length }} тасков</div>
+    <button class="regular-button" v-on:click="toggleModal">Add item</button>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "SideBar",
+  computed: {
+    ...mapGetters(["items", "filteredItems"]),
+    categories() {
+      let unique = [];
+      for (var i = 0; i < this.items.length; i++) {
+        if (!unique.includes(this.items[i].category)) {
+          unique.push(this.items[i].category);
+        }
+      }
+      return unique.sort((a, b) => a.localeCompare(b));
+    },
+  },
+  methods: {
+    ...mapActions(["filterItems"]),
+    ...mapActions("modal", ["toggleModal"]),
+  },
 };
 </script>
 
@@ -30,6 +65,9 @@ export default {
   font-size: 18px
 
 .categories-item:hover
+  background: #E7E7E7
+
+.categories-item_active
   background: #E7E7E7
 
 .current-tasks
