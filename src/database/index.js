@@ -3,12 +3,12 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCPxWHnQbELbMLWdxW6qKMBJQRl5Yglqcg",
-  authDomain: "vue-todolist-7ba9e.firebaseapp.com",
-  projectId: "vue-todolist-7ba9e",
-  storageBucket: "vue-todolist-7ba9e.appspot.com",
-  messagingSenderId: "338794626941",
-  appId: "1:338794626941:web:baa57c009330d184c71614",
+  apiKey: process.env.VUE_APP_API_KEY,
+  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+  projectId: process.env.VUE_APP_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_APP_ID,
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
