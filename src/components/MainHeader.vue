@@ -43,10 +43,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 header
   width: 100%
   height: 80px
-  background: tomato
+  background: $main-color
   display: flex
   justify-content: space-between
   align-items: center

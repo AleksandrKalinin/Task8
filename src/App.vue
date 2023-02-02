@@ -9,8 +9,9 @@ export default {
 </script>
 
 <style lang="sass">
-@import "./assets/styles/icon.sass"
-@import "./assets/styles/button.sass"
+@import "@/assets/styles/colorScheme.sass"
+@import "@/assets/styles/icon.sass"
+@import "@/assets/styles/button.sass"
 
 *
   box-sizing: border-box

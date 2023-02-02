@@ -203,6 +203,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .calendar
   width: 100%
   display: flex
@@ -222,10 +223,10 @@ export default {
       align-items: center
       text-align: center
       padding: 20px 10px
-      border: 1px solid tomato
+      border: 1px solid $main-color
       min-width: 145px
       margin: 0 10px
-      color: tomato
+      color: $main-color
       cursor: pointer
 
       .calendar-item__day

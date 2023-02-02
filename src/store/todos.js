@@ -1,7 +1,7 @@
 export const todos = [
   {
     id: 1,
-    date: "2023-01-21",
+    date: "2023-03-04",
     category: "General",
     completed: false,
     title: "Lorem ipsum 1",
@@ -9,7 +9,7 @@ export const todos = [
   },
   {
     id: 2,
-    date: "2023-01-27",
+    date: "2023-02-07",
     category: "Work",
     completed: true,
     title: "Lorem ipsum 2",
@@ -17,7 +17,7 @@ export const todos = [
   },
   {
     id: 3,
-    date: "2023-01-22",
+    date: "2023-02-12",
     category: "Study",
     completed: true,
     title: "Blabla",
@@ -25,7 +25,7 @@ export const todos = [
   },
   {
     id: 4,
-    date: "2023-02-04",
+    date: "2023-01-04",
     category: "General",
     completed: false,
     title: "Title 4",
@@ -33,7 +33,7 @@ export const todos = [
   },
   {
     id: 5,
-    date: "2023-01-23",
+    date: "2023-02-13",
     category: "Study",
     completed: false,
     title: "Title 5",
@@ -49,7 +49,7 @@ export const todos = [
   },
   {
     id: 7,
-    date: "2023-01-23",
+    date: "2023-02-08",
     category: "General",
     completed: false,
     title: "Lorem ipsum 7",
@@ -73,7 +73,7 @@ export const todos = [
   },
   {
     id: 10,
-    date: "2023-01-25",
+    date: "2023-01-29",
     category: "General",
     completed: false,
     title: "Title 4",
@@ -105,7 +105,7 @@ export const todos = [
   },
   {
     id: 14,
-    date: "2023-01-23",
+    date: "2023-03-03",
     category: "Study",
     completed: true,
     title: "Blabla",
@@ -113,7 +113,7 @@ export const todos = [
   },
   {
     id: 15,
-    date: "2023-01-22",
+    date: "2023-02-22",
     category: "General",
     completed: false,
     title: "Title 4",
@@ -121,7 +121,7 @@ export const todos = [
   },
   {
     id: 16,
-    date: "2023-01-25",
+    date: "2023-02-06",
     category: "Study",
     completed: false,
     title: "Title 5",
@@ -137,7 +137,7 @@ export const todos = [
   },
   {
     id: 18,
-    date: "2023-01-23",
+    date: "2023-02-13",
     category: "Personal",
     completed: false,
     title: "Title 4",
@@ -145,7 +145,7 @@ export const todos = [
   },
   {
     id: 19,
-    date: "2023-01-25",
+    date: "2023-02-25",
     category: "Study",
     completed: false,
     title: "Title 5",
@@ -153,7 +153,7 @@ export const todos = [
   },
   {
     id: 20,
-    date: "2023-01-22",
+    date: "2023-02-12",
     category: "General",
     completed: true,
     title: "Lorem ipsum 6",
@@ -169,7 +169,7 @@ export const todos = [
   },
   {
     id: 22,
-    date: "2023-01-22",
+    date: "2023-02-08",
     category: "General",
     completed: true,
     title: "Lorem ipsum 6",
@@ -177,7 +177,7 @@ export const todos = [
   },
   {
     id: 23,
-    date: "2023-02-09",
+    date: "2023-03-04",
     category: "Study",
     completed: false,
     title: "Title 5",

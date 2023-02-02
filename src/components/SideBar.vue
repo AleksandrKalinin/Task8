@@ -69,10 +69,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .sidebar
   width: 300px
   margin-right: 30px
-  border: 1px solid tomato
+  border: 1px solid $main-color
   padding-bottom: 20px
 
 .categories-item

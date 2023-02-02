@@ -79,6 +79,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .tasks-header
   padding: 30px 0
 
@@ -95,7 +96,7 @@ export default {
         cursor: pointer
 
       .task-option_selected
-        color: tomato
+        color: $main-color
 
     .tasks-filter
       display: flex

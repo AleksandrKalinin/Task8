@@ -57,6 +57,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .tasks-item
   display: flex
   align-items: flex-start
@@ -65,7 +66,7 @@ export default {
   margin-bottom: 20px
   cursor: pointer
   transition: .2s all
-  border: 1px solid tomato
+  border: 1px solid $main-color
 
   .tasks-item__icons
     width: 70px
@@ -92,10 +93,10 @@ export default {
   transform: translateX(5px)
 
   .tasks-item__text
-    color: tomato
+    color: $main-color
 
   .tasks-item__category
-    color: tomato
+    color: $main-color
 
 .tasks-item_completed
   opacity: .4

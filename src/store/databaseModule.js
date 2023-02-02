@@ -6,12 +6,13 @@ import {
   getDocs,
   deleteDoc,
   updateDoc,
+  getDoc,
   query,
   where,
   Timestamp,
 } from "firebase/firestore";
 
-import { todos } from "./todos";
+//import { todos } from "./todos";
 
 export const databaseModule = {
   state: () => ({
@@ -38,9 +39,9 @@ export const databaseModule = {
       state.areItemsLoaded = true;
     },
 
-    addToDatabase() {
-      //console.log("state");
-      //state.items.unshift(value);
+    addItem(state, value) {
+      console.log(state);
+      console.log(value);
     },
 
     updateItem(state, value) {
@@ -63,7 +64,7 @@ export const databaseModule = {
     async addToDatabase({ commit }, item) {
       try {
         await setDoc(doc(db, "todos", item.id), item);
-        commit("addToDatabase", item);
+        commit("addItem");
       } catch (e) {
         console.log(e);
       }
@@ -73,12 +74,6 @@ export const databaseModule = {
       try {
         await deleteDoc(doc(db, "todos", id.toString()));
         commit("deleteItem", id);
-        /*
-        onSnapshot(doc(db, "todos", id.toString()), (snapshot) => {
-          if (snapshot) {
-            commit("deleteItem", id);
-          }
-        }); */
       } catch (e) {
         console.log(e);
       }
@@ -88,26 +83,20 @@ export const databaseModule = {
       try {
         const docRef = doc(db, "todos", item.id.toString());
         await updateDoc(docRef, item);
-        //const docSnap = await getDoc(docRef);
-        commit("updateItem", item);
-        /*
-        onSnapshot(doc(db, "todos", item.id.toString()), (snapshot) => {
-          console.log("fire");
-          if (snapshot) {
-            commit("updateItem", snapshot.data());
-          }
-        }); */
+        const docSnap = await getDoc(docRef);
+        commit("updateItem", docSnap.data());
       } catch (e) {
         console.log(e);
       }
     },
 
-    async changeStatusInDatabase({ commit }, item) {
+    async changeStatusInDatabase({commit }, item) {
       try {
         const docRef = doc(db, "todos", item.id.toString());
         item.completed = !item.completed;
         await updateDoc(docRef, item);
-        commit("changeStatus", item);
+        const docSnap = await getDoc(docRef);
+        commit("changeStatus", docSnap.data());
       } catch (e) {
         console.log(e);
       }
@@ -133,22 +122,14 @@ export const databaseModule = {
         } else {
           console.log("No such document!");
         }
-        /*const docSnap = await getDocs(todosRef);
-        if (docSnap) {
-          docSnap.forEach((doc) => {
-            array.push(doc.data());
-          });
-          commit("updateItems", array);
-        } else {
-          console.log("No such document!");
-        }*/
         commit("itemsLoaded", true);
       } catch (e) {
         console.log(e);
       }
     },
 
-    async loopOverDatabase() {
+    //function for pushing todos from todos.js into database
+    /*async pushIntoDatabase() {
       for (var i = 0; i < todos.length; i++) {
         let newDate = Timestamp.fromDate(new Date(todos[i].date));
         todos[i].date = newDate;
@@ -158,7 +139,7 @@ export const databaseModule = {
           console.log(e);
         }
       }
-    },
+    },*/
   },
 
   namespaced: true,

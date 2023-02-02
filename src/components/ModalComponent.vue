@@ -115,6 +115,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .overlay
   width: 100%
   height: 100vh
@@ -156,7 +157,7 @@ export default {
 .modal-form__input
   width: 100%
   margin-bottom: 20px
-  border: 1px solid tomato
+  border: 1px solid $main-color
   outline: none
   font-size: 18px
   padding: 7px

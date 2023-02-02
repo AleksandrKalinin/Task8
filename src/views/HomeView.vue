@@ -2,9 +2,7 @@
   <template v-if="isModalOpen">
     <ModalComponent />
   </template>
-  <button v-on:click="loopOverDatabase">Add data</button>
-  <button v-on:click="getFromDatabase">Get data</button>
-  <button v-on:click="consoleItems">Console Items</button>
+  <!--<button v-on:click="pushIntoDatabase">Add data</button>-->
   <MainHeader :username="username" />
   <main class="container">
     <CalendarCarousel />
@@ -31,6 +29,7 @@ import router from "@/router";
 
 export default {
   name: "HomeView",
+
   components: {
     TodoList,
     SideBar,
@@ -39,11 +38,13 @@ export default {
     TodoHeader,
     ModalComponent,
   },
+
   data() {
     return {
       username: null,
     };
   },
+
   computed: {
     ...mapGetters("modal", ["isModalOpen"]),
     ...mapGetters([
@@ -53,14 +54,17 @@ export default {
     ]),
     ...mapGetters("database", ["items"]),
   },
+
   methods: {
-    ...mapActions("database", ["getFromDatabase", "loopOverDatabase"]),
+    ...mapActions("database", ["pushIntoDatabase"]),
+
     getDatabase: async function () {
       const querySnapshot = await getDocs(collection(db, "users"));
       querySnapshot.forEach((doc) => {
         console.log(`${doc.id} => ${doc.data()}`);
       });
     },
+
     getAnother: async function () {
       const docRef = doc(db, "todos", "M6YobLBRZMYj1jOGFhBv");
       const docSnap = await getDoc(docRef);
@@ -70,13 +74,8 @@ export default {
         console.log("No such document!");
       }
     },
-    consoleItems: function () {
-      //console.log("items", this.items);
-      //console.log("filteredItems", this.filteredItems);
-      //console.log("filteredAndSortedItems", this.filteredAndSortedItems);
-      //console.log("filteredItemsByDate", this.filteredItemsByDate);
-    },
   },
+
   mounted() {
     onAuthStateChanged(auth, (user) => {
       if (!user) {

@@ -79,6 +79,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .register
   font-size: 18px
   min-height: calc(100vh - 80px)
@@ -92,7 +93,7 @@ export default {
   display: flex
   flex-direction: column
   align-items: center
-  border: 1px solid tomato
+  border: 1px solid $main-color
   padding: 20px
 
 .auth-form__title
@@ -106,7 +107,7 @@ export default {
 .auth-form__input
   width: 100%
   margin-bottom: 20px
-  border: 1px solid tomato
+  border: 1px solid $main-color
   outline: none
   font-size: 18px
   padding: 7px
