@@ -90,7 +90,7 @@ export const databaseModule = {
       }
     },
 
-    async changeStatusInDatabase({commit }, item) {
+    async changeStatusInDatabase({commit}, item) {
       try {
         const docRef = doc(db, "todos", item.id.toString());
         item.completed = !item.completed;
