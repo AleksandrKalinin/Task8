@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import { modalModule } from "@/store/modalModule";
 import { calendarModule } from "@/store/calendarModule";
 import { databaseModule } from "@/store/databaseModule";
+import { authModule } from "@/store/authModule";
 //import router from "@/router";
 
 export default createStore({
@@ -188,5 +189,6 @@ export default createStore({
     modal: modalModule,
     calendar: calendarModule,
     database: databaseModule,
+    auth: authModule,
   },
 });

@@ -1,7 +1,10 @@
 <template>
   <MainHeader />
   <div class="register">
-    <form class="auth-form" v-on:submit.prevent="signInUser">
+    <form
+      class="auth-form"
+      v-on:submit.prevent="signInUser({ email, password })"
+    >
       <h2 class="auth-form__title">Sign In</h2>
       <input
         type="email"
@@ -31,9 +34,7 @@
 
 <script>
 import MainHeader from "@/components/MainHeader.vue";
-import { auth } from "@/database/index";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import router from "@/router";
+import { mapActions } from "vuex";
 
 export default {
   name: "SignInComponent",
@@ -51,28 +52,7 @@ export default {
   },
 
   methods: {
-    signInUser: function () {
-      signInWithEmailAndPassword(auth, this.email, this.password)
-        .then(() => {
-          router.push("/");
-        })
-        .catch((error) => {
-          switch (error.code) {
-            case "auth/invalid-email":
-              this.errorMessage = "Invalid email";
-              break;
-            case "auth/user-not-found":
-              this.errorMessage = "No account with that email was found";
-              break;
-            case "auth/wrong-password":
-              this.errorMessage = "Incorrect password";
-              break;
-            default:
-              this.errorMessage = "Email or password was incorrect";
-              break;
-          }
-        });
-    },
+    ...mapActions("auth", ["signInUser"]),
   },
 };
 </script>

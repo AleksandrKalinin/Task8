@@ -11,7 +11,7 @@
         title="Press to log out"
         v-else
         class="header__username"
-        v-on:click="logOut"
+        v-on:click="logoutUser"
       >
         {{ username }}
       </div>
@@ -20,9 +20,7 @@
 </template>
 
 <script>
-import { auth } from "@/database/index";
-import { signOut } from "firebase/auth";
-//import router from "@/router";
+import { mapActions } from "vuex";
 
 export default {
   name: "MainHeader",
@@ -30,13 +28,7 @@ export default {
   props: ["username"],
 
   methods: {
-    logOut: function () {
-      signOut(auth)
-        .then(() => {})
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    ...mapActions("auth", ["logoutUser"]),
   },
 };
 </script>

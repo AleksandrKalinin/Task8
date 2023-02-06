@@ -1,7 +1,10 @@
 <template>
   <MainHeader />
   <div class="register">
-    <form class="auth-form" v-on:submit.prevent="registerUser">
+    <form
+      class="auth-form"
+      v-on:submit.prevent="registerUser({ email, password })"
+    >
       <h2 class="auth-form__title">Registration</h2>
       <input
         type="email"
@@ -29,8 +32,7 @@
 
 <script>
 import MainHeader from "@/components/MainHeader.vue";
-import { db, auth } from "@/database/index";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { mapActions } from "vuex";
 
 export default {
   name: "RegisterComponent",
@@ -48,28 +50,7 @@ export default {
   },
 
   methods: {
-    consoleDB: function () {
-      console.log(db);
-    },
-    registerUser: function () {
-      createUserWithEmailAndPassword(auth, this.email, this.password)
-        .then((data) => {
-          const user = data.user;
-          console.log(user);
-          console.log("Success");
-        })
-        .catch((error) => {
-          console.log(error);
-          switch (error.code) {
-            case "auth/email-already-in-use":
-              this.errorMessage = "Email already in use";
-              break;
-            default:
-              this.errorMessage = "Email or password was incorrect";
-              break;
-          }
-        });
-    },
+    ...mapActions("auth", ["registerUser"]),
   },
 };
 </script>
