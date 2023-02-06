@@ -20,7 +20,7 @@
       <span class="icon" v-on:click="editItem(item.id)">
         <img v-bind:src="require('@/assets/edit.svg')" />
       </span>
-      <span class="icon" v-on:click="deleteFromDatabase(item.id)">
+      <span class="icon" v-on:click="onDelete(item.id)">
         <img v-bind:src="require('@/assets/delete.svg')" />
       </span>
     </div>
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import router from "@/router";
 
 export default {
@@ -37,19 +36,16 @@ export default {
   props: ["item"],
 
   methods: {
-    ...mapActions("database", [
-      "deleteFromDatabase",
-      "editFromDatabase",
-      "changeStatusInDatabase",
-    ]),
-    ...mapActions(["startEditing"]),
+    onDelete: function (id) {
+      this.$emit("deleteItem", id);
+    },
+
+    onStatusChange: function (item) {
+      this.$emit("changeItemStatus", item);
+    },
 
     editItem: function (id) {
       router.push(`/edit/${id}`);
-    },
-
-    changeStatus: function (item) {
-      this.changeStatusInDatabase(item);
     },
   },
 };

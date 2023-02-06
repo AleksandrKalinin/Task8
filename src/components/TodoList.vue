@@ -2,7 +2,14 @@
   <div class="tasks">
     <div class="tasks__wrapper">
       <template v-if="areItemsLoaded && items.length > 0">
-        <TodoItem v-for="item in items" :key="item.id" :item="item" />
+        <TodoItem
+          v-for="item in items"
+          :key="item.id"
+          :item="item"
+          @deleteItem="deleteFromDatabase"
+          @editItem="editFromDatabase"
+          @changeItemStatus="changeStatusInDatabase"
+        />
       </template>
       <template v-else-if="areItemsLoaded && items.length === 0">
         <div class="tasks__placeholder">No items for display</div>
@@ -33,8 +40,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(["loadItems"]),
-    ...mapActions("database", ["getFromDatabase"]),
+    ...mapActions(["loadItems", "startEditing"]),
+    ...mapActions("database", [
+      "getFromDatabase",
+      "deleteFromDatabase",
+      "editFromDatabase",
+      "changeStatusInDatabase",
+    ]),
   },
 
   mounted() {
