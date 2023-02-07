@@ -1,29 +1,31 @@
 <template>
   <div class="calendar">
     <div class="calendar__wrapper" v-on:scroll="checkPosition">
-      <template v-if="days.length !== 0">
+      <template v-if="daysTransformed.length !== 0">
         <div
           class="calendar__item calendar-item"
-          v-for="(item, index) in days"
+          v-for="(item, index) in daysTransformed"
           :key="index"
           :class="{
-            'calendar-item_selected': this.checkIfEqual(item, selectedDate),
+            'calendar-item_selected': true /* this.checkIfEqual(item, selectedDate) */,
           }"
           :ref="setItemRef"
-          v-on:click="selectItem(item)"
+          v-on:click="selectItem(item.date)"
         >
-          <span class="calendar-item__day">{{ names[item.getDay()] }}</span>
+          <span class="calendar-item__day">{{
+            names[item.date.getDay()]
+          }}</span>
           <span class="calendar-item__date"
-            >{{ months[item.getMonth()] }} {{ item.getDate() }},
-            {{ item.getFullYear() }}</span
+            >{{ months[item.date.getMonth()] }} {{ item.date.getDate() }},
+            {{ item.date.getFullYear() }}</span
           >
           <div class="calendar-item__tasks calendar-tasks">
             <span
-              v-if="checkCompleted(item)"
+              v-if="item.isCompleted"
               class="calendar-tasks__item calendar-task_completed"
             ></span>
             <span
-              v-if="checkPending(item)"
+              v-if="item.isPending"
               class="calendar-tasks__item calendar-task_pending"
             ></span>
           </div>
@@ -44,6 +46,7 @@ export default {
 
   data() {
     return {
+      daysTransformed: [],
       itemRefs: [],
       days: [],
       names: [
@@ -82,6 +85,7 @@ export default {
     ...mapActions("database", ["getFromDatabase"]),
     ...mapActions("calendar", ["setSelectedDate"]),
 
+    /*
     checkCompleted: function (item) {
       for (let i = 0; i < this.items.length; i++) {
         if (
@@ -109,7 +113,7 @@ export default {
         }
       }
     },
-
+*/
     checkPosition: function () {
       let el = this.itemRefs[this.itemRefs.length - 2];
       let rect = el.getBoundingClientRect();
@@ -126,12 +130,21 @@ export default {
       const year = this.selectedDate.getFullYear();
       const month = this.selectedDate.getMonth();
       const days = [];
+      let daysTransformed = [];
       const startDate = new Date(year, month, 1);
       while (startDate.getMonth() === month) {
+        let day = {};
+        day.date = new Date(startDate);
+        day.isSelected = this.checkIfEqual(day.date, this.selectedDate);
+        day.isCompleted = false;
+        day.isPending = false;
+        //console.log(day);
+        daysTransformed.push(day);
         days.push(new Date(startDate));
         startDate.setDate(startDate.getDate() + 1);
       }
       this.days = days;
+      this.daysTransformed = daysTransformed;
     },
 
     appendItems: function () {
@@ -179,6 +192,7 @@ export default {
     },
 
     checkIfEqual: function (first, second) {
+      //console.log("checking", first, second);
       const ifEqual =
         first.getDate() === second.getDate() &&
         first.getMonth() === second.getMonth() &&
@@ -187,16 +201,40 @@ export default {
     },
   },
 
+  watch: {
+    items: function (newItems) {
+      let tempItems = this.daysTransformed;
+      for (let i = 0; i < tempItems.length; i++) {
+        let day = tempItems[i];
+        day.isCompleted = newItems.some((item) => {
+          return (
+            this.checkIfEqual(day.date, new Date(item.date.seconds * 1000)) &&
+            item.completed === true
+          );
+        });
+        day.isPending = newItems.some((item) => {
+          return (
+            this.checkIfEqual(day.date, new Date(item.date.seconds * 1000)) &&
+            item.completed === false
+          );
+        });
+        tempItems[i] = day;
+      }
+      this.daysTransformed = tempItems;
+    },
+  },
+
   beforeUpdate() {
     this.itemRefs = [];
   },
 
   mounted() {
+    //console.log(this.items);
     this.renderItems();
   },
 
   updated() {
-    this.scrollToElement();
+    //this.scrollToElement();
   },
 };
 </script>
