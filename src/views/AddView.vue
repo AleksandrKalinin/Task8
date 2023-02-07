@@ -1,9 +1,9 @@
 <template>
-  <ModalComponent />
+  <TodoModalComponent />
 </template>
 
 <script>
-import ModalComponent from "@/components/ModalComponent.vue";
+import TodoModalComponent from "@/components/TodoModalComponent.vue";
 import { mapActions } from "vuex";
 import { auth } from "@/database/index";
 import { onAuthStateChanged } from "firebase/auth";
@@ -12,7 +12,7 @@ import router from "@/router";
 export default {
   name: "AddView",
   components: {
-    ModalComponent,
+    TodoModalComponent,
   },
 
   methods: {

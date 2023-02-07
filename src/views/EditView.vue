@@ -1,10 +1,10 @@
 <template>
-  <ModalComponent v-if="currentItem" v-bind:currentId="$route.params.id" />
+  <TodoModalComponent v-if="currentItem" v-bind:currentId="$route.params.id" />
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import ModalComponent from "@/components/ModalComponent.vue";
+import TodoModalComponent from "@/components/TodoModalComponent.vue";
 import { auth } from "@/database/index";
 import { onAuthStateChanged } from "firebase/auth";
 import router from "@/router";
@@ -12,7 +12,7 @@ import router from "@/router";
 export default {
   name: "EditView",
   components: {
-    ModalComponent,
+    TodoModalComponent,
   },
 
   computed: {

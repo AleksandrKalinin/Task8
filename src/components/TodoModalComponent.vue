@@ -38,7 +38,7 @@ import { mapGetters, mapActions } from "vuex";
 import { Timestamp } from "firebase/firestore";
 
 export default {
-  name: "ModalComponent",
+  name: "TodoModalComponent",
 
   props: ["currentId"],
 

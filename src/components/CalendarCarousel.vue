@@ -138,7 +138,6 @@ export default {
         day.isSelected = this.checkIfEqual(day.date, this.selectedDate);
         day.isCompleted = false;
         day.isPending = false;
-        //console.log(day);
         daysTransformed.push(day);
         days.push(new Date(startDate));
         startDate.setDate(startDate.getDate() + 1);

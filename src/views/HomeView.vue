@@ -1,6 +1,6 @@
 <template>
   <template v-if="isModalOpen">
-    <ModalComponent />
+    <TodoModalComponent />
   </template>
   <!--<button v-on:click="pushIntoDatabase">Add data</button>-->
   <MainHeader :username="username" />
@@ -21,7 +21,7 @@ import SideBar from "@/components/SideBar.vue";
 import CalendarCarousel from "@/components/CalendarCarousel.vue";
 import MainHeader from "@/components/MainHeader.vue";
 import TodoHeader from "@/components/TodoHeader.vue";
-import ModalComponent from "@/components/ModalComponent.vue";
+import TodoModalComponent from "@/components/TodoModalComponent.vue";
 import { auth } from "@/database/index";
 import { onAuthStateChanged } from "firebase/auth";
 import router from "@/router";
@@ -35,7 +35,7 @@ export default {
     CalendarCarousel,
     MainHeader,
     TodoHeader,
-    ModalComponent,
+    TodoModalComponent,
   },
 
   data() {
