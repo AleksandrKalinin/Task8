@@ -7,7 +7,7 @@
           v-for="(item, index) in daysTransformed"
           :key="index"
           :class="{
-            'calendar-item_selected': true /* this.checkIfEqual(item, selectedDate) */,
+            'calendar-item_selected': item.isSelected,
           }"
           :ref="setItemRef"
           v-on:click="selectItem(item.date)"
@@ -205,6 +205,10 @@ export default {
       let tempItems = this.daysTransformed;
       for (let i = 0; i < tempItems.length; i++) {
         let day = tempItems[i];
+        day.isSelected = this.checkIfEqual(
+          day.date,
+          new Date(this.selectedDate)
+        );
         day.isCompleted = newItems.some((item) => {
           return (
             this.checkIfEqual(day.date, new Date(item.date.seconds * 1000)) &&
