@@ -12,8 +12,6 @@ import {
   Timestamp,
 } from "firebase/firestore";
 
-//import { todos } from "./todos";
-
 export const databaseModule = {
   state: () => ({
     items: [],
@@ -127,19 +125,6 @@ export const databaseModule = {
         console.log(e);
       }
     },
-
-    //function for pushing todos from todos.js into database
-    /*async pushIntoDatabase() {
-      for (var i = 0; i < todos.length; i++) {
-        let newDate = Timestamp.fromDate(new Date(todos[i].date));
-        todos[i].date = newDate;
-        try {
-          await setDoc(doc(db, "todos", todos[i].id.toString()), todos[i]);
-        } catch (e) {
-          console.log(e);
-        }
-      }
-    },*/
   },
 
   namespaced: true,

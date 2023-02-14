@@ -90,35 +90,6 @@ export default {
     ...mapActions("database", ["getFromDatabase"]),
     ...mapActions("calendar", ["setSelectedDate"]),
 
-    /*
-    checkCompleted: function (item) {
-      for (let i = 0; i < this.items.length; i++) {
-        if (
-          this.checkIfEqual(
-            item,
-            new Date(this.items[i].date.seconds * 1000)
-          ) &&
-          this.items[i].completed === true
-        ) {
-          return true;
-        }
-      }
-    },
-
-    checkPending: function (item) {
-      for (let i = 0; i < this.items.length; i++) {
-        if (
-          this.checkIfEqual(
-            item,
-            new Date(this.items[i].date.seconds * 1000)
-          ) &&
-          this.items[i].completed === false
-        ) {
-          return true;
-        }
-      }
-    },
-*/
     checkPosition: function () {
       let el = this.itemRefs[this.itemRefs.length - 1];
       let rect = el.getBoundingClientRect();
@@ -128,7 +99,6 @@ export default {
         rect.right <=
           (window.innerWidth || document.documentElement.clientWidth)
       ) {
-        //console.log("firing on coords", rect.left, rect.right);
         this.ifAppended = true;
         this.appendItems();
       }
