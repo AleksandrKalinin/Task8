@@ -10,7 +10,7 @@
       type="checkbox"
       name=""
       v-bind:checked="item.completed"
-      v-on:click="changeStatus(item)"
+      v-on:click="onStatusChange(item.id)"
     />
     <p class="tasks-item__text">
       {{ item.text }}
@@ -38,8 +38,8 @@ export default {
       this.$emit("deleteItem", id);
     },
 
-    onStatusChange: function (item) {
-      this.$emit("changeItemStatus", item);
+    onStatusChange: function (id) {
+      this.$emit("changeItemStatus", id);
     },
 
     startEditing: function (id) {

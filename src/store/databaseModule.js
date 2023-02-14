@@ -54,7 +54,7 @@ export const databaseModule = {
 
     changeStatus(state, value) {
       let index = state.items.map((item) => item.id).indexOf(value.id);
-      state.items[index].completed = !state.items[index].completed;
+      state.items[index] = value;
     },
   },
 
@@ -88,11 +88,12 @@ export const databaseModule = {
       }
     },
 
-    async changeStatusInDatabase({ commit }, item) {
+    async changeStatusInDatabase({ commit, getters }, id) {
       try {
-        const docRef = doc(db, "todos", item.id.toString());
-        item.completed = !item.completed;
-        await updateDoc(docRef, item);
+        const currentItem = getters.items.find((item) => item.id === id);
+        const docRef = doc(db, "todos", id.toString());
+        currentItem.completed = !currentItem.completed;
+        await updateDoc(docRef, currentItem);
         const docSnap = await getDoc(docRef);
         commit("changeStatus", docSnap.data());
       } catch (e) {
