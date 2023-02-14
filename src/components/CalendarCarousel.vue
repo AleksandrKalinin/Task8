@@ -7,7 +7,7 @@
           v-for="(item, index) in daysTransformed"
           :key="index"
           :class="{
-            'calendar-item_selected': item.isSelected,
+            'calendar-item_selected': arrayOfDates[index],
           }"
           :ref="setItemRef"
           v-on:click="selectItem(item.date)"
@@ -21,11 +21,11 @@
           >
           <div class="calendar-item__tasks calendar-tasks">
             <span
-              v-if="item.isCompleted"
+              v-if="arrayOfCompleted[index]"
               class="calendar-tasks__item calendar-task_completed"
             ></span>
             <span
-              v-if="item.isPending"
+              v-if="arrayOfPending[index]"
               class="calendar-tasks__item calendar-task_pending"
             ></span>
           </div>
@@ -81,8 +81,35 @@ export default {
     ...mapGetters(["filteredItemsByDate"]),
     ...mapGetters("database", ["items"]),
 
-    itemsDB() {
-      return this.items;
+    arrayOfDates() {
+      let result = this.daysTransformed.map((a) => a.date);
+      return result.map((item) => {
+        return this.checkIfEqual(item, new Date(this.selectedDate));
+      });
+    },
+
+    arrayOfPending() {
+      let result = this.daysTransformed.map((a) => a.date);
+      return result.map((curDay) => {
+        return this.items.some((item) => {
+          return (
+            this.checkIfEqual(curDay, new Date(item.date.seconds * 1000)) &&
+            item.completed === false
+          );
+        });
+      });
+    },
+
+    arrayOfCompleted() {
+      let result = this.daysTransformed.map((a) => a.date);
+      return result.map((curDay) => {
+        return this.items.some((item) => {
+          return (
+            this.checkIfEqual(curDay, new Date(item.date.seconds * 1000)) &&
+            item.completed === true
+          );
+        });
+      });
     },
   },
 
@@ -189,33 +216,6 @@ export default {
         first.getMonth() === second.getMonth() &&
         first.getFullYear() === second.getFullYear();
       return ifEqual;
-    },
-  },
-
-  watch: {
-    itemsDB: function (newItems) {
-      let tempItems = this.daysTransformed;
-      for (let i = 0; i < tempItems.length; i++) {
-        let day = tempItems[i];
-        day.isSelected = this.checkIfEqual(
-          day.date,
-          new Date(this.selectedDate)
-        );
-        day.isCompleted = newItems.some((item) => {
-          return (
-            this.checkIfEqual(day.date, new Date(item.date.seconds * 1000)) &&
-            item.completed === true
-          );
-        });
-        day.isPending = newItems.some((item) => {
-          return (
-            this.checkIfEqual(day.date, new Date(item.date.seconds * 1000)) &&
-            item.completed === false
-          );
-        });
-        tempItems[i] = day;
-      }
-      this.daysTransformed = tempItems;
     },
   },
 
