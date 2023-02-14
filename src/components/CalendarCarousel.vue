@@ -100,11 +100,12 @@ export default {
           (window.innerWidth || document.documentElement.clientWidth)
       ) {
         this.ifAppended = true;
-        this.appendItems();
+        this.appendDaysForCalendar();
       }
     },
 
-    renderItems: function () {
+    /** function renderCalendarItems serves for construction array of days for rendering */
+    renderCalendarItems: function () {
       const year = this.selectedDate.getFullYear();
       const month = this.selectedDate.getMonth();
       const days = [];
@@ -124,7 +125,9 @@ export default {
       this.daysTransformed = daysTransformed;
     },
 
-    appendItems: function () {
+    /** function appendDaysForCalendar serves for appending items for array of calendar items
+     * in case of scrolling to the last element of current array of calendar items */
+    appendDaysForCalendar: function () {
       const days = this.days;
       const daysTransformed = this.daysTransformed;
       let year = days[days.length - 1].getFullYear();
@@ -221,7 +224,7 @@ export default {
   },
 
   mounted() {
-    this.renderItems();
+    this.renderCalendarItems();
   },
 };
 </script>
