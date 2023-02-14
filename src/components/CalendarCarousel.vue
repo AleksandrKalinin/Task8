@@ -48,6 +48,7 @@ export default {
     return {
       daysTransformed: [],
       itemRefs: [],
+      ifAppended: false,
       days: [],
       names: [
         "Sunday",
@@ -79,6 +80,10 @@ export default {
     ...mapGetters("calendar", ["selectedDate"]),
     ...mapGetters(["filteredItemsByDate"]),
     ...mapGetters("database", ["items"]),
+
+    itemsDB() {
+      return this.items;
+    },
   },
 
   methods: {
@@ -115,13 +120,16 @@ export default {
     },
 */
     checkPosition: function () {
-      let el = this.itemRefs[this.itemRefs.length - 2];
+      let el = this.itemRefs[this.itemRefs.length - 1];
       let rect = el.getBoundingClientRect();
       if (
+        this.ifAppended === false &&
         rect.left >= 0 &&
         rect.right <=
           (window.innerWidth || document.documentElement.clientWidth)
       ) {
+        //console.log("firing on coords", rect.left, rect.right);
+        this.ifAppended = true;
         this.appendItems();
       }
     },
@@ -148,6 +156,7 @@ export default {
 
     appendItems: function () {
       const days = this.days;
+      const daysTransformed = this.daysTransformed;
       let year = days[days.length - 1].getFullYear();
       let month = days[days.length - 1].getMonth();
       const startDate = new Date(year, month, 1);
@@ -159,15 +168,26 @@ export default {
       }
       const endDate = new Date(year, month, 1);
       while (endDate.getMonth() === month) {
+        let day = {};
+        day.date = new Date(endDate);
+        day.isSelected = this.checkIfEqual(day.date, this.selectedDate);
+        day.isCompleted = this.checkIfEqual(
+          day.date,
+          new Date(this.selectedDate)
+        );
+        day.isPending = false;
+        daysTransformed.push(day);
         days.push(new Date(endDate));
         endDate.setDate(endDate.getDate() + 1);
       }
       this.days = days;
+      this.daysTransformed = daysTransformed;
       const payload = {
         startDate,
         endDate,
       };
       this.getFromDatabase(payload);
+      this.ifAppended = false;
     },
 
     setItemRef: function (el) {
@@ -191,7 +211,6 @@ export default {
     },
 
     checkIfEqual: function (first, second) {
-      //console.log("checking", first, second);
       const ifEqual =
         first.getDate() === second.getDate() &&
         first.getMonth() === second.getMonth() &&
@@ -201,7 +220,7 @@ export default {
   },
 
   watch: {
-    items: function (newItems) {
+    itemsDB: function (newItems) {
       let tempItems = this.daysTransformed;
       for (let i = 0; i < tempItems.length; i++) {
         let day = tempItems[i];
@@ -232,12 +251,7 @@ export default {
   },
 
   mounted() {
-    //console.log(this.items);
     this.renderItems();
-  },
-
-  updated() {
-    //this.scrollToElement();
   },
 };
 </script>
