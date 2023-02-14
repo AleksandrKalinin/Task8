@@ -47,20 +47,24 @@ export default {
       "editFromDatabase",
       "changeStatusInDatabase",
     ]),
+
+    getDateRange() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const startDate = new Date(year, month, 1);
+      const endDate =
+        month === 11 ? new Date(year + 1, 0, 1) : new Date(year, month + 1, 1);
+      const payload = {
+        startDate,
+        endDate,
+      };
+      this.getFromDatabase(payload);
+    },
   },
 
   mounted() {
-    let date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const startDate = new Date(year, month, 1);
-    const endDate =
-      month === 11 ? new Date(year + 1, 0, 1) : new Date(year, month + 1, 1);
-    const payload = {
-      startDate,
-      endDate,
-    };
-    this.getFromDatabase(payload);
+    this.getDateRange();
   },
 };
 </script>
