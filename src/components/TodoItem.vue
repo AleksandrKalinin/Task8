@@ -17,7 +17,7 @@
     </p>
     <span class="tasks-item__category">{{ item.category }}</span>
     <div class="tasks-item__icons">
-      <span class="icon" v-on:click="editItem(item.id)">
+      <span class="icon" v-on:click="startEditing(item.id)">
         <img v-bind:src="require('@/assets/edit.svg')" />
       </span>
       <span class="icon" v-on:click="onDelete(item.id)">
@@ -28,8 +28,6 @@
 </template>
 
 <script>
-import router from "@/router";
-
 export default {
   name: "TodoItem",
 
@@ -44,8 +42,8 @@ export default {
       this.$emit("changeItemStatus", item);
     },
 
-    editItem: function (id) {
-      router.push(`/edit/${id}`);
+    startEditing: function (id) {
+      this.$emit("editItem", id);
     },
   },
 };

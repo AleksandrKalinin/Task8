@@ -7,7 +7,7 @@
           :key="item.id"
           :item="item"
           @deleteItem="deleteFromDatabase"
-          @editItem="editFromDatabase"
+          @editItem="startEditing"
           @changeItemStatus="changeStatusInDatabase"
         />
       </template>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import router from "@/router";
 import TodoItem from "@/components/TodoItem.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -60,6 +61,10 @@ export default {
         endDate,
       };
       this.getFromDatabase(payload);
+    },
+
+    startEditing(id) {
+      router.push(`/edit/${id}`);
     },
   },
 
