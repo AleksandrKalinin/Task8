@@ -71,14 +71,6 @@ export default {
   mounted() {
     this.getDateRange();
   },
-
-  methods: {
-    ...mapActions(["loadItems"]),
-  },
-
-  mounted() {
-    this.loadItems();
-  },
 };
 </script>
 

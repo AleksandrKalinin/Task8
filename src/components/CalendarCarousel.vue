@@ -35,7 +35,6 @@
         <div>Loading...</div>
       </template>
     </div>
-    -->
   </div>
 </template>
 
