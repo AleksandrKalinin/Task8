@@ -1,10 +1,11 @@
 import { createStore } from "vuex";
 import { modalModule } from "@/store/modalModule";
+import { calendarModule } from "@/store/calendarModule";
+import { databaseModule } from "@/store/databaseModule";
+import { authModule } from "@/store/authModule";
 
 export default createStore({
   state: {
-    items: [],
-    areItemsLoaded: false,
     itemsLength: 10,
     onlyPendingItems: false,
     selectedFilter: "All",
@@ -14,16 +15,8 @@ export default createStore({
   },
 
   getters: {
-    items: (state) => {
-      return state.items;
-    },
-
     currentItem: (state) => {
       return state.currentItem;
-    },
-
-    areItemsLoaded: (state) => {
-      return state.areItemsLoaded;
     },
 
     itemsLength: (state) => {
@@ -38,11 +31,12 @@ export default createStore({
       return state.onlyPendingItems;
     },
 
-    pendingItems(state, getters) {
+    pendingItems(state, getters, rootGetters) {
+      let items = JSON.parse(JSON.stringify(rootGetters.database.items));
       if (state.onlyPendingItems) {
-        return [...getters.items.filter((item) => item.completed !== true)];
+        return items.filter((item) => item.completed !== true);
       } else {
-        return getters.items;
+        return items;
       }
     },
 
@@ -54,7 +48,7 @@ export default createStore({
           ),
         ];
       } else {
-        return getters.pendingItems;
+        return [...getters.pendingItems];
       }
     },
 
@@ -72,17 +66,35 @@ export default createStore({
         ];
       }
     },
+
+    filteredItemsByDate(state, getters, rootGetters) {
+      let date = rootGetters.calendar.selectedDate;
+      if (date === null) {
+        return [...getters.filteredAndSortedItems];
+      } else {
+        let year = date.getFullYear();
+        let month = date.getMonth();
+        let day = date.getDate();
+        return [
+          ...getters.filteredAndSortedItems.filter((item) => {
+            let currentDate;
+            if (Object.prototype.hasOwnProperty.call(item?.date, "seconds")) {
+              currentDate = new Date(item.date.seconds * 1000);
+            } else {
+              currentDate = item.date;
+            }
+            return (
+              currentDate.getDate() === day &&
+              currentDate.getMonth() === month &&
+              currentDate.getFullYear() === year
+            );
+          }),
+        ];
+      }
+    },
   },
 
   mutations: {
-    updateItems(state, items) {
-      state.items = items;
-    },
-
-    itemsLoaded(state) {
-      state.areItemsLoaded = true;
-    },
-
     updateItemsLength(state, value) {
       state.itemsLength = value;
     },
@@ -117,12 +129,12 @@ export default createStore({
       state.items[index] = value;
     },
 
-    setCurrentItem(state, id) {
-      let index = state.items.map((item) => item.id).indexOf(id);
-      state.currentItem = state.items[index];
+    setCurrentItem(state, item) {
+      state.currentItem = item;
     },
 
     changeStatus(state, id) {
+      console.log(id);
       let index = state.items.map((item) => item.id).indexOf(id);
       state.items[index].completed = !state.items[index].completed;
     },
@@ -134,11 +146,20 @@ export default createStore({
         await fetch("./todos.json")
           .then((response) => response.json())
           .then((data) => {
-            commit("updateItems", data);
-          })
-          .then(() => commit("itemsLoaded"));
+            commit("updateOriginalItems", data);
+          });
       } catch (e) {
         console.log(e);
+      }
+    },
+
+    startEditing({ commit, rootGetters }, id) {
+      let items;
+      if (rootGetters["database/areItemsLoaded"]) {
+        items = JSON.parse(JSON.stringify(rootGetters["database/items"]));
+        let index = items.map((item) => item.id.toString()).indexOf(id);
+        let item = items[index];
+        commit("setCurrentItem", item);
       }
     },
 
@@ -146,41 +167,27 @@ export default createStore({
       commit("filterItems", value);
     },
 
-    changeStatus({ commit }, id) {
-      commit("changeStatus", id);
-    },
-
-    deleteItem({ commit }, id) {
-      commit("deleteItem", id);
-    },
-
-    setCurrentItem({ commit }, id) {
-      commit("setCurrentItem", id);
-      commit("modal/toggleModal");
-    },
-
-    updateSortValue({ commit }, value) {
-      commit("updateSortValue", value);
+    selectPending({ commit }) {
+      commit("selectPending");
     },
 
     updateSortOrder({ commit }) {
       commit("updateSortOrder");
     },
 
-    selectPending({ commit }) {
-      commit("selectPending");
+    updateSortValue({ commit }, value) {
+      commit("updateSortValue", value);
     },
 
-    editItem({ commit }, item) {
-      commit("editItem", item);
-    },
-
-    addItem({ commit }, item) {
-      commit("addItem", item);
+    stopEditing({ commit }) {
+      commit("setCurrentItem", null);
     },
   },
 
   modules: {
     modal: modalModule,
+    calendar: calendarModule,
+    database: databaseModule,
+    auth: authModule,
   },
 });

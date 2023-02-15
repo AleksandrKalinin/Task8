@@ -1,7 +1,7 @@
 <template>
   <div class="overlay">
     <div class="modal">
-      <span class="icon" v-on:click="toggleModal">
+      <span class="icon" v-on:click="stopEditingAndClose">
         <img v-bind:src="require('@/assets/close.svg')" />
       </span>
       <form class="modal__form modal-form">
@@ -21,7 +21,10 @@
           placeholder="Select date"
           v-model="date"
         />
-        <button class="regular-button" v-on:click="applyChanges">
+        <button
+          class="button button_regular button_normal"
+          v-on:click="applyChanges"
+        >
           {{ buttonText }}
         </button>
       </form>
@@ -31,10 +34,14 @@
 
 <script>
 import { v4 as uuidv4 } from "uuid";
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import { Timestamp } from "firebase/firestore";
 
 export default {
-  name: "ModalComponent",
+  name: "TodoModalComponent",
+
+  props: ["currentId"],
+
   data() {
     return {
       text: "",
@@ -45,14 +52,20 @@ export default {
 
   computed: {
     ...mapGetters(["currentItem"]),
+
+    selectedItem() {
+      return this.currentItem;
+    },
+
     buttonText() {
       return this.currentItem === null ? "Add item" : "Edit item";
     },
   },
 
   methods: {
-    ...mapActions(["addItem", "editItem"]),
-    ...mapActions("modal", ["toggleModal"]),
+    ...mapActions("database", ["addToDatabase", "editFromDatabase"]),
+    ...mapActions("modal", ["toggleModal", "closeModal"]),
+    ...mapActions(["stopEditing"]),
 
     applyChanges: function (e) {
       if (this.text === "" || this.date === "" || this.category === "") {
@@ -67,23 +80,33 @@ export default {
           item.completed = this.currentItem.completed;
         }
         item.text = this.text;
-        item.date = this.date;
+        item.date = Timestamp.fromDate(new Date(this.date));
         item.category = this.category;
         e.preventDefault();
         if (this.currentItem === null) {
-          this.addItem(item);
+          this.addToDatabase(item);
         } else {
-          this.editItem(item);
+          this.editFromDatabase(item);
         }
-        this.toggleModal();
+        this.closeModal();
+        this.stopEditing();
       }
+    },
+
+    stopEditingAndClose: function () {
+      this.stopEditing();
+      this.closeModal();
     },
   },
 
   mounted() {
     if (this.currentItem !== null) {
       this.text = this.currentItem.text;
-      this.date = this.currentItem.date;
+      const date = new Date(this.currentItem.date.seconds * 1000);
+      const year = date.getFullYear();
+      const month = `${date.getMonth() + 1}`.padStart(2, "0");
+      const day = `${date.getDate()}`.padStart(2, "0");
+      this.date = `${year}-${month}-${day}`;
       this.category = this.currentItem.category;
     }
   },
@@ -92,6 +115,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .overlay
   width: 100%
   height: 100vh
@@ -133,7 +157,7 @@ export default {
 .modal-form__input
   width: 100%
   margin-bottom: 20px
-  border: 1px solid tomato
+  border: 1px solid $main-color
   outline: none
   font-size: 18px
   padding: 7px

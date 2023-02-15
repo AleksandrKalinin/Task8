@@ -23,18 +23,29 @@
         {{ category }}
       </div>
     </div>
-    <div class="current-tasks">Всего {{ filteredItems.length }} тасков</div>
-    <button class="regular-button" v-on:click="toggleModal">Add item</button>
+    <div class="current-tasks">
+      Всего {{ filteredItemsByDate.length }} тасков
+    </div>
+    <button
+      class="button button_regular button_normal button_centered"
+      v-on:click="addItem"
+    >
+      Add item
+    </button>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import router from "@/router";
 
 export default {
   name: "SideBar",
+
   computed: {
-    ...mapGetters(["items", "filteredItems"]),
+    ...mapGetters(["filteredItemsByDate"]),
+    ...mapGetters("database", ["items"]),
+
     categories() {
       let unique = [];
       for (var i = 0; i < this.items.length; i++) {
@@ -45,19 +56,25 @@ export default {
       return unique.sort((a, b) => a.localeCompare(b));
     },
   },
+
   methods: {
     ...mapActions(["filterItems"]),
-    ...mapActions("modal", ["toggleModal"]),
+
+    addItem: function () {
+      router.push("/add");
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .sidebar
   width: 300px
   margin-right: 30px
-  border: 1px solid tomato
+  border: 1px solid $main-color
+  padding-bottom: 20px
 
 .categories-item
   padding: 15px

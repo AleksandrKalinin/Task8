@@ -1,16 +1,17 @@
 <template>
   <div class="tasks">
     <div class="tasks__wrapper">
-      <template v-if="areItemsLoaded && filteredAndSortedItems.length > 0">
+      <template v-if="areItemsLoaded && items.length > 0">
         <TodoItem
-          v-for="item in filteredAndSortedItems"
+          v-for="item in items"
           :key="item.id"
           :item="item"
+          @deleteItem="deleteFromDatabase"
+          @editItem="startEditing"
+          @changeItemStatus="changeStatusInDatabase"
         />
       </template>
-      <template
-        v-else-if="areItemsLoaded && filteredAndSortedItems.length === 0"
-      >
+      <template v-else-if="areItemsLoaded && items.length === 0">
         <div class="tasks__placeholder">No items for display</div>
       </template>
       <template v-else>
@@ -21,17 +22,54 @@
 </template>
 
 <script>
+import router from "@/router";
 import TodoItem from "@/components/TodoItem.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TodoList",
+
   components: {
     TodoItem,
   },
 
   computed: {
-    ...mapGetters(["filteredAndSortedItems", "areItemsLoaded"]),
+    ...mapGetters({
+      items: "filteredItemsByDate",
+    }),
+    ...mapGetters("database", ["areItemsLoaded"]),
+  },
+
+  methods: {
+    ...mapActions(["loadItems", "startEditing"]),
+    ...mapActions("database", [
+      "getFromDatabase",
+      "deleteFromDatabase",
+      "editFromDatabase",
+      "changeStatusInDatabase",
+    ]),
+
+    getDateRange() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const startDate = new Date(year, month, 1);
+      const endDate =
+        month === 11 ? new Date(year + 1, 0, 1) : new Date(year, month + 1, 1);
+      const payload = {
+        startDate,
+        endDate,
+      };
+      this.getFromDatabase(payload);
+    },
+
+    startEditing(id) {
+      router.push(`/edit/${id}`);
+    },
+  },
+
+  mounted() {
+    this.getDateRange();
   },
 
   methods: {

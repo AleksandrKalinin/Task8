@@ -1,21 +1,26 @@
 <template>
-  <div class="tasks__item tasks-item">
+  <div
+    class="tasks__item tasks-item"
+    v-bind:class="{
+      'tasks-item_completed': item.completed === true,
+    }"
+  >
     <input
       class="tasks-item__checkbox"
       type="checkbox"
       name=""
       v-bind:checked="item.completed"
-      v-on:click="changeStatus(item.id)"
+      v-on:click="onStatusChange(item.id)"
     />
     <p class="tasks-item__text">
       {{ item.text }}
     </p>
     <span class="tasks-item__category">{{ item.category }}</span>
     <div class="tasks-item__icons">
-      <span class="icon" v-on:click="setCurrentItem(item.id)">
+      <span class="icon" v-on:click="startEditing(item.id)">
         <img v-bind:src="require('@/assets/edit.svg')" />
       </span>
-      <span class="icon" v-on:click="deleteItem(item.id)">
+      <span class="icon" v-on:click="onDelete(item.id)">
         <img v-bind:src="require('@/assets/delete.svg')" />
       </span>
     </div>
@@ -27,15 +32,28 @@ import { mapActions } from "vuex";
 
 export default {
   name: "TodoItem",
+
   props: ["item"],
+
   methods: {
-    ...mapActions(["deleteItem", "setCurrentItem", "changeStatus"]),
+    onDelete: function (id) {
+      this.$emit("deleteItem", id);
+    },
+
+    onStatusChange: function (id) {
+      this.$emit("changeItemStatus", id);
+    },
+
+    startEditing: function (id) {
+      this.$emit("editItem", id);
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .tasks-item
   display: flex
   align-items: flex-start
@@ -43,8 +61,8 @@ export default {
   padding: 30px
   margin-bottom: 20px
   cursor: pointer
-  transition: .1s all
-  border: 1px solid tomato
+  transition: .2s all
+  border: 1px solid $main-color
 
   .tasks-item__icons
     width: 70px
@@ -68,11 +86,14 @@ export default {
     text-align: center
 
 .tasks-item:hover
-  transform: translateX(10px)
+  transform: translateX(5px)
 
   .tasks-item__text
-    color: tomato
+    color: $main-color
 
   .tasks-item__category
-    color: tomato
+    color: $main-color
+
+.tasks-item_completed
+  opacity: .4
 </style>

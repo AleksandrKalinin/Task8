@@ -45,16 +45,17 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "TodoHeader",
+
   computed: {
     ...mapGetters(["itemsSortValue"]),
   },
+
   methods: {
     ...mapActions(["updateSortValue", "updateSortOrder", "selectPending"]),
-
     sortItems: function (e) {
       this.updateSortOrder();
       switch (e.target.id) {
@@ -78,6 +79,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
+@import "@/assets/styles/colorScheme.sass"
 .tasks-header
   padding: 30px 0
 
@@ -94,7 +96,7 @@ export default {
         cursor: pointer
 
       .task-option_selected
-        color: tomato
+        color: $main-color
 
     .tasks-filter
       display: flex
